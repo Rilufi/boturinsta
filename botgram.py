@@ -28,9 +28,7 @@ proxies = {
 }
 
 response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
-print(response)
 todos = json.loads(response.text)
-print(todos)
 site = todos[0].get('url')
 r = requests.get(site, allow_redirects=True)
 open('gato.jpeg', 'wb').write(r.content)
@@ -67,10 +65,8 @@ def formatImage():
     base.paste(cat, (wPos, hPos))
     base.save('gatogram.jpeg', quality=95)
 
-formatImage()
-response = bot.upload_story('gatogram.jpeg')
-
-if response == 200:
-    print("deu certo")
-else:
-    print("não rolou")
+try:
+  formatImage()
+  response = bot.upload_story('gatogram.jpeg')
+except:
+  response = bot.upload_story('gato.jpeg')
