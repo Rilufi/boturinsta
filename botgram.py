@@ -11,11 +11,10 @@ import math
 CAT_KEY = os.environ.get("CAT_KEY")
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
-
 bot = MyIGBot(USERNAME, PASSWORD)
 
 #get the cats
-url = "https://api.thecatapi.com/v1/images/search?format=json"
+url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
 
 payload={}
 headers = {
@@ -68,5 +67,6 @@ def formatImage():
 try:
   formatImage()
   response = bot.upload_story('gatogram.jpeg')
+  print("gato foi")
 except:
-  response = bot.upload_story('gato.jpeg')
+  print("deu ruim")
