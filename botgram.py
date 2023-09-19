@@ -28,11 +28,12 @@ proxies = {
 }
 
 response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
+print(response)
 todos = json.loads(response.text)
+print(todos)
 site = todos[0].get('url')
 r = requests.get(site, allow_redirects=True)
 open('gato.jpeg', 'wb').write(r.content)
-
 
 
 def formatImage():
