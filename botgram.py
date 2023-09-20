@@ -2,16 +2,38 @@ import requests
 import json
 import urllib.request
 import os
-from myigbot import MyIGBot
+#from myigbot import MyIGBot
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
-
+from instagrapi import Client
 
 #calling secret variables
 CAT_KEY = os.environ.get("CAT_KEY")
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
-bot = MyIGBot(USERNAME, PASSWORD)
+
+#login with instagrapi
+cl = Client()
+cl.login(USERNAME, PASSWORD)
+
+#hashtags to be follower/liked
+tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
+
+#function for liking and following
+def catliker(hash):
+    medias = cl.hashtag_medias_recent(hash, amount=1)
+    dicmed = medias[0].dict()
+    id = dicmed.get('id')
+    #print(dicmed.get('code'))
+    pk = dicmed['user'].get('pk')
+    cl.media_like(id)
+    cl.user_follow(pk)
+
+for tag in tags:
+    catliker(tag)
+
+#logging with myIG
+#bot = MyIGBot(USERNAME, PASSWORD)
 
 #get the cats
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
@@ -66,7 +88,8 @@ def formatImage():
 
 try:
   formatImage()
-  response = bot.upload_story('gatogram.jpeg')
+  #response = bot.upload_story('gatogram.jpeg')
+  cl.photo_upload_to_story('gatogram.jpeg')
   print("gato foi")
 except:
   print("deu ruim")
