@@ -79,28 +79,25 @@ except:
 
 
 #login with instagrapi
-sleep(300)
 cl = Client()
 cl.login(USERNAME, PASSWORD)
 
 #hashtags to be follower/liked
 #tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
-sleep(300)
-medias = cl.hashtag_medias_recent('CatsOfInstagram', amount=1)
+medias = cl.hashtag_medias_top('CatsOfInstagram', amount=5)
 count = 0
 
 #function for liking and following
 def catliker(i):
     dicmed = medias[i].dict()
     id = dicmed.get('id')
-    #print(dicmed.get('code'))
-    sleep(300)
+    print(dicmed.get('code'))
     pk = dicmed['user'].get('pk')
     cl.media_like(id)
     cl.user_follow(pk)
 
 #for tag in tags:
-while count < 1:
+while count < 5:
     catliker(count)
     count += 1
     print(f"{count} hashtag foi")
