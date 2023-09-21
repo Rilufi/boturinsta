@@ -82,7 +82,7 @@ cl.login(USERNAME, PASSWORD)
 
 #hashtags to be follower/liked
 #tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
-medias = cl.hashtag_medias_recent('CatsOfInstagram', amount=5)
+medias = cl.hashtag_medias_top('CatsOfInstagram', amount=1)
 count = 0
 
 #function for liking and following
@@ -95,6 +95,6 @@ def catliker(i):
     cl.user_follow(pk)
 
 #for tag in tags:
-while count < 5:
+while count < 1:
     catliker(count)
     count += 1
