@@ -2,7 +2,7 @@ import requests
 import json
 import urllib.request
 import os
-#from myigbot import MyIGBot
+from myigbot import MyIGBot
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
@@ -13,31 +13,8 @@ CAT_KEY = os.environ.get("CAT_KEY")
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 
-#login with instagrapi
-cl = Client()
-cl.login(USERNAME, PASSWORD)
-
-#hashtags to be follower/liked
-#tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
-medias = cl.hashtag_medias_recent('CatsOfInstagram', amount=5)
-count = 0
-
-#function for liking and following
-def catliker(i):
-    dicmed = medias[i].dict()
-    id = dicmed.get('id')
-    #print(dicmed.get('code'))
-    pk = dicmed['user'].get('pk')
-    cl.media_like(id)
-    cl.user_follow(pk)
-
-#for tag in tags:
-while count < 5:
-    catliker(count)
-    count += 1
-
 #logging with myIG
-#bot = MyIGBot(USERNAME, PASSWORD)
+bot = MyIGBot(USERNAME, PASSWORD)
 
 #get the cats
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
@@ -92,8 +69,32 @@ def formatImage():
 
 try:
   formatImage()
-  #response = bot.upload_story('gatogram.jpeg')
-  cl.photo_upload_to_story('gatogram.jpeg')
-  print("gato foi")
+  response = bot.upload_story('gatogram.jpeg')
+  #cl.photo_upload_to_story('gatogram.jpeg')
+  print("story de gato foi")
 except:
-  print("deu ruim")
+  print("deu ruim o story")
+
+
+#login with instagrapi
+cl = Client()
+cl.login(USERNAME, PASSWORD)
+
+#hashtags to be follower/liked
+#tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
+medias = cl.hashtag_medias_recent('CatsOfInstagram', amount=5)
+count = 0
+
+#function for liking and following
+def catliker(i):
+    dicmed = medias[i].dict()
+    id = dicmed.get('id')
+    #print(dicmed.get('code'))
+    pk = dicmed['user'].get('pk')
+    cl.media_like(id)
+    cl.user_follow(pk)
+
+#for tag in tags:
+while count < 5:
+    catliker(count)
+    count += 1
