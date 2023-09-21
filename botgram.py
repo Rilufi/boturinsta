@@ -14,8 +14,10 @@ USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 
 #logging with myIG
-bot = MyIGBot(USERNAME, PASSWORD)
-
+try:
+   bot = MyIGBot(USERNAME, PASSWORD)
+except:
+  pass
 #get the cats
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
 
@@ -77,11 +79,13 @@ except:
 
 
 #login with instagrapi
+sleep(300)
 cl = Client()
 cl.login(USERNAME, PASSWORD)
 
 #hashtags to be follower/liked
 #tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
+sleep(300)
 medias = cl.hashtag_medias_recent('CatsOfInstagram', amount=1)
 count = 0
 
@@ -90,6 +94,7 @@ def catliker(i):
     dicmed = medias[i].dict()
     id = dicmed.get('id')
     #print(dicmed.get('code'))
+    sleep(300)
     pk = dicmed['user'].get('pk')
     cl.media_like(id)
     cl.user_follow(pk)
