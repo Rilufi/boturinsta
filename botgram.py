@@ -6,6 +6,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
+from time import sleep
 
 #calling secret variables
 CAT_KEY = os.environ.get("CAT_KEY")
@@ -31,6 +32,7 @@ def catliker(hash):
 
 for tag in tags:
     catliker(tag)
+    sleep(60)
 
 #logging with myIG
 #bot = MyIGBot(USERNAME, PASSWORD)
