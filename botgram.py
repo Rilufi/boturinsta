@@ -18,21 +18,23 @@ cl = Client()
 cl.login(USERNAME, PASSWORD)
 
 #hashtags to be follower/liked
-tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
+#tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
+medias = cl.hashtag_medias_recent('CatsOfInstagram', amount=5)
+count = 0
 
 #function for liking and following
-def catliker(hash):
-    medias = cl.hashtag_medias_recent(hash, amount=1)
-    dicmed = medias[0].dict()
+def catliker(i):
+    dicmed = medias[i].dict()
     id = dicmed.get('id')
     #print(dicmed.get('code'))
     pk = dicmed['user'].get('pk')
     cl.media_like(id)
     cl.user_follow(pk)
 
-for tag in tags:
-    catliker(tag)
-    sleep(60)
+#for tag in tags:
+while count < 5:
+    catliker(count)
+    count += 1
 
 #logging with myIG
 #bot = MyIGBot(USERNAME, PASSWORD)
