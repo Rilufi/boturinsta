@@ -87,7 +87,7 @@ tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
 
 #function for liking and following
 def catliker(hash):
-    medias = cl.hashtag_medias_recent(hash, amount=1)
+    medias = cl.hashtag_medias_recent_v1(hash, amount=1)
     dicmed = medias[0].dict()
     id = dicmed.get('id')
     print(dicmed.get('code'))
