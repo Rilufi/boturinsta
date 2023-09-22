@@ -90,11 +90,11 @@ def catliker(hash):
     medias = cl.hashtag_medias_recent_v1(hash, amount=1)
     dicmed = medias[0].dict()
     id = dicmed.get('id')
-    print(dicmed.get('code'))
+#    print(dicmed.get('code'))
     pk = dicmed['user'].get('pk')
     cl.media_like(id)
     cl.user_follow(pk)
 
 for tag in tags:
     catliker(tag)
-    print(f"{tag} hashtag foi")
+    print(f"#{tag} foi")
