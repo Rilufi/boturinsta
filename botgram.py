@@ -77,6 +77,11 @@ try:
 except:
   print("deu ruim o story")
 
+
+#logging with instragrapi
+cl = Client()
+cl.login(USERNAME, PASSWORD)
+
 #hashtags to be followed/liked
 tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
 
