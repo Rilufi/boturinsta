@@ -77,27 +77,19 @@ try:
 except:
   print("deu ruim o story")
 
-
-#login with instagrapi
-#cl = Client()
-#cl.login(USERNAME, PASSWORD)
-
-#hashtags to be follower/liked
-#tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
-#medias = cl.hashtag_medias_top('CatsOfInstagram', amount=1)
-count = 0
+#hashtags to be followed/liked
+tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
 
 #function for liking and following
-def catliker(i):
-    dicmed = medias[i].dict()
+def catliker(hash):
+    medias = cl.hashtag_medias_recent(hash, amount=1)
+    dicmed = medias[0].dict()
     id = dicmed.get('id')
     print(dicmed.get('code'))
     pk = dicmed['user'].get('pk')
     cl.media_like(id)
     cl.user_follow(pk)
 
-#for tag in tags:
-#while count < 5:
-#    catliker(count)
-#    count += 1
-#    print(f"{count} hashtag foi")
+for tag in tags:
+    catliker(tag)
+    print(f"{tag} hashtag foi")
