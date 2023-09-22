@@ -83,7 +83,7 @@ cl = Client()
 cl.login(USERNAME, PASSWORD)
 
 #hashtags to be followed/liked
-tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
+tags = ['cats', 'catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers', 'adventurecat', 'catmemes', 'kittens', 'catoftheday']
 
 #function for liking and following
 def catliker(hash):
