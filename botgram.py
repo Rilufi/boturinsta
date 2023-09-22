@@ -79,12 +79,12 @@ except:
 
 
 #login with instagrapi
-cl = Client()
-cl.login(USERNAME, PASSWORD)
+#cl = Client()
+#cl.login(USERNAME, PASSWORD)
 
 #hashtags to be follower/liked
 #tags = ['catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers']
-medias = cl.hashtag_medias_top('CatsOfInstagram', amount=1)
+#medias = cl.hashtag_medias_top('CatsOfInstagram', amount=1)
 count = 0
 
 #function for liking and following
@@ -97,7 +97,7 @@ def catliker(i):
     cl.user_follow(pk)
 
 #for tag in tags:
-while count < 5:
-    catliker(count)
-    count += 1
-    print(f"{count} hashtag foi")
+#while count < 5:
+#    catliker(count)
+#    count += 1
+#    print(f"{count} hashtag foi")
