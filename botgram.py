@@ -97,13 +97,13 @@ def catliker(hash):
     cl.media_like(id)
   #  cl.user_follow(pk)
 
-tagger(tags):
-   for tag in tags:
-       try:
-          catliker(tag)
-          print(f"#{tag} foi")
-       except:
-          print(f"#{tag} num foi")
+def tagger(tags):
+    for tag in tags:
+        try:
+           catliker(tag)
+           print(f"#{tag} foi")
+        except:
+           print(f"#{tag} num foi")
 
 #get the hour
 data_e_hora_atuais = datetime.now()
