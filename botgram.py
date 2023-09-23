@@ -79,8 +79,8 @@ except:
 
 
 #logging with instragrapi
-#cl = Client()
-#cl.login(USERNAME, PASSWORD)
+cl = Client()
+cl.login(USERNAME, PASSWORD)
 
 #hashtags to be followed/liked
 tags = ['cats', 'catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers', 'adventurecat', 'catmemes', 'kittens', 'catoftheday']
@@ -95,6 +95,6 @@ def catliker(hash):
     cl.media_like(id)
     cl.user_follow(pk)
 
-#for tag in tags:
-    #catliker(tag)
-   # print(f"#{tag} foi")
+for tag in tags:
+    catliker(tag)
+    print(f"#{tag} foi")
