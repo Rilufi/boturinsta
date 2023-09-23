@@ -110,7 +110,7 @@ def tagger(tags):
 
 #get the hour
 data_e_hora_atuais = datetime.now()
-hora = data_e_hora_atuais.strftime('%H')
+hour = data_e_hora_atuais.strftime('%H')
 
 if (hour % 2) == 0:
    tagger(tags_even)
