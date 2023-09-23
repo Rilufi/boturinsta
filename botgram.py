@@ -89,13 +89,16 @@ tags_even = ['instacat', 'catstagram',  'adventurecat', 'kittens', 'catoftheday'
 
 #function for liking and following
 def catliker(hash):
+    sleep(60)
     medias = cl.hashtag_medias_recent_v1(hash, amount=1)
     dicmed = medias[0].dict()
     id = dicmed.get('id')
 #    print(dicmed.get('code'))
     pk = dicmed['user'].get('pk')
+    sleep(60)
     cl.media_like(id)
-  #  cl.user_follow(pk)
+    sleep(60)
+    cl.user_follow(pk)
 
 def tagger(tags):
     for tag in tags:
