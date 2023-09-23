@@ -80,8 +80,8 @@ except:
 
 
 #logging with instragrapi
-cl = Client(request_timeout=7)
-cl.login(USERNAME, PASSWORD)
+#cl = Client(request_timeout=7)
+#cl.login(USERNAME, PASSWORD)
 
 #hashtags to be followed/liked
 tags_odd = ['cats', 'catlife', 'catsofinstagram','catlovers', 'catmemes']
@@ -112,7 +112,7 @@ def tagger(tags):
 data_e_hora_atuais = datetime.now()
 hour = data_e_hora_atuais.strftime('%H')
 
-if (int(hour) % 2) == 0:
-   tagger(tags_even)
-else:
-   tagger(tags_odd)
+#if (int(hour) % 2) == 0:
+#   tagger(tags_even)
+#else:
+#   tagger(tags_odd)
