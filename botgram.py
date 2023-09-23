@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
 from time import sleep
+from datetime import datetime
 
 #calling secret variables
 CAT_KEY = os.environ.get("CAT_KEY")
@@ -79,11 +80,12 @@ except:
 
 
 #logging with instragrapi
-cl = Client()
+cl = Client(request_timeout=7)
 cl.login(USERNAME, PASSWORD)
 
 #hashtags to be followed/liked
-tags = ['cats', 'catlife', 'catsofinstagram', 'instacat', 'catstagram', 'catlovers', 'adventurecat', 'catmemes', 'kittens', 'catoftheday']
+tags_odd = ['cats', 'catlife', 'catsofinstagram','catlovers', 'catmemes']
+tags_even = ['instacat', 'catstagram',  'adventurecat', 'kittens', 'catoftheday']
 
 #function for liking and following
 def catliker(hash):
@@ -93,8 +95,21 @@ def catliker(hash):
 #    print(dicmed.get('code'))
     pk = dicmed['user'].get('pk')
     cl.media_like(id)
-    cl.user_follow(pk)
+  #  cl.user_follow(pk)
 
-for tag in tags:
-    catliker(tag)
-    print(f"#{tag} foi")
+tagger(tags):
+   for tag in tags:
+       try:
+          catliker(tag)
+          print(f"#{tag} foi")
+       except:
+          print(f"#{tag} num foi")
+
+#get the hour
+data_e_hora_atuais = datetime.now()
+hora = data_e_hora_atuais.strftime('%H')
+
+if (hour % 2) == 0:
+   tagger(tags_even)
+else:
+   tagger(tags_odd)
