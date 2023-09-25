@@ -13,12 +13,14 @@ from datetime import datetime
 CAT_KEY = os.environ.get("CAT_KEY")
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
+USUARIO = os.environ.get("USUARIO")
 
 #logging with myIG
 try:
    bot = MyIGBot(USERNAME, PASSWORD)
 except:
   pass
+
 #get the cats
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
 
@@ -39,9 +41,9 @@ r = requests.get(site, allow_redirects=True)
 open('gato.jpeg', 'wb').write(r.content)
 
 
-def formatImage():
+def formatImage(image):
     base = Image.new('RGB', (1080,1920), (255,255,0))
-    cat = Image.open('gato.jpeg')
+    cat = Image.open(image)
     originalCat = cat.copy()
 
     #~ Resize and spawn multiple image of cat in the background
@@ -68,15 +70,40 @@ def formatImage():
     hPos = int((1920-cat.size[1])/2)
 
     base.paste(cat, (wPos, hPos))
-    base.save('gatogram.jpeg', quality=95)
+    base.save(image, quality=95)
 
 try:
-  formatImage()
-  response = bot.upload_story('gatogram.jpeg')
-  #cl.photo_upload_to_story('gatogram.jpeg')
+  formatImage('gato.jpeg')
+  response = bot.upload_story('gato.jpeg')
+  #cl.photo_upload_to_story('gato.jpeg')
   print("story de gato foi")
 except:
-  print("deu ruim o story")
+  print("deu ruim o story de gato")
+
+
+#pegar foto de dog
+def get_random_dog(filename: str='temp') -> None:
+
+    r = requests.get('https://dog.ceo/api/breeds/image/random')
+    rd = json.loads(r.content)
+    r2 = requests.get(rd['message'])
+
+    with open(filename, 'wb') as image:
+        for chunk in r2:
+            image.write(chunk)
+
+#logar na outra conta
+try:
+  bot = MyIGBot(USUARIO, PASSWORD)
+  get_random_dog('dog.jpeg')
+  formatImage('dog.jpeg')
+  response = bot.upload_story('dog.jpeg')
+  #cl.photo_upload_to_story('dog.jpeg')
+  print("story de dog foi")
+except:
+  print("deu ruim o story de dog")
+except:
+  pass
 
 
 #logging with instragrapi
