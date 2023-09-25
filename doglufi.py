@@ -77,8 +77,8 @@ except:
 
 
 #hashtags to be followed/liked
-tags_odd = ['cats', 'catlife', 'catsofinstagram','catlovers', 'catmemes']
-tags_even = ['instacat', 'catstagram',  'adventurecat', 'kittens', 'catoftheday']
+tags_odd = ['dog', 'doglife', 'dogsofinstagram','doglovers', ]
+tags_even = ['dogs', 'dogstagram',  'instadog', 'puppy', 'dogoftheday']
 
 #function for liking and following
 def catliker(hash):
@@ -105,7 +105,7 @@ def tagger(tags):
 data_e_hora_atuais = datetime.now()
 hour = data_e_hora_atuais.strftime('%H')
 
-#if (int(hour) % 2) == 0:
-#   tagger(tags_even)
-#else:
-#   tagger(tags_odd)
+if (int(hour) % 2) == 0:
+   tagger(tags_even)
+else:
+   tagger(tags_odd)
