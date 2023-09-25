@@ -94,10 +94,10 @@ def get_random_dog(filename: str='temp') -> None:
 
 #logar na outra conta e postar dog
 #try:
-bot = MyIGBot(USUARIO, PASSWORD)
+botter = MyIGBot(USUARIO, PASSWORD)
 get_random_dog('dog.jpeg')
 formatImage('dog.jpeg')
-response = bot.upload_story('dog.jpeg')
+response = botter.upload_story('dog.jpeg')
 #cl.photo_upload_to_story('dog.jpeg')
 print("story de dog foi")
 #except:
