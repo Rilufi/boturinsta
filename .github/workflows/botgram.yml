@@ -1,11 +1,11 @@
 name: Boturinsta
 
 
-on: push
+on:
 
-  #  schedule:
+    schedule:
 
- #       - cron: '0 * * * *'
+        - cron: '0 * * * *'
 
 
 jobs:
@@ -45,11 +45,7 @@ jobs:
         env:
                   USERNAME: ${{ secrets.USERNAME }}
 
-                  USUARIO: ${{ secrets.USUARIO }}
-
                   PASSWORD: ${{ secrets.PASSWORD }}
-
-                  SENHA: ${{ secrets.SENHA }}
 
                   CAT_KEY: ${{ secrets.CAT_KEY }}
                   
