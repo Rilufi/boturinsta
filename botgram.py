@@ -18,8 +18,10 @@ USUARIO = os.environ.get("USUARIO")
 
 #logging with myIG
 try:
-#   bot = MyIGBot(USERNAME, PASSWORD)
+  bot = MyIGBot(USERNAME, PASSWORD)
+  print('gato logado')
 except:
+  print('gato deslogado')
   pass
 
 #get the cats
@@ -95,8 +97,9 @@ def get_random_dog(filename: str='temp') -> None:
 
 #logar na outra conta e postar dog
 #try:
-cl = Client()
+cl = Client(request_timeout=7)
 cl.login(USUARIO, PASSWORD)
+print('dog logado')
 get_random_dog('dog.jpeg')
 formatImage('dog.jpeg')
 #response = botter.upload_story('dog.jpeg')
