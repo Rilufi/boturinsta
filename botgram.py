@@ -14,6 +14,7 @@ CAT_KEY = os.environ.get("CAT_KEY")
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 USUARIO = os.environ.get("USUARIO")
+SENHA = os.environ.get("SENHA")
 
 #logging with myIG
 try:
@@ -94,7 +95,7 @@ def get_random_dog(filename: str='temp') -> None:
 
 #logar na outra conta e postar dog
 #try:
-botter = MyIGBot(USUARIO, PASSWORD)
+botter = MyIGBot(USUARIO, SENHA)
 get_random_dog('dog.jpeg')
 formatImage('dog.jpeg')
 response = botter.upload_story('dog.jpeg')
