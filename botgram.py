@@ -74,7 +74,7 @@ def formatImage(image):
 
 try:
   formatImage('gato.jpeg')
-  response = bot.upload_story('gato.jpeg')
+#  response = bot.upload_story('gato.jpeg')
   #cl.photo_upload_to_story('gato.jpeg')
   print("story de gato foi")
 except:
@@ -93,16 +93,16 @@ def get_random_dog(filename: str='temp') -> None:
             image.write(chunk)
 
 #logar na outra conta e postar dog
-try:
-  bot = MyIGBot(USUARIO, PASSWORD)
-  get_random_dog('dog.jpeg')
-  formatImage('dog.jpeg')
-  response = bot.upload_story('dog.jpeg')
-  #cl.photo_upload_to_story('dog.jpeg')
-  print("story de dog foi")
-except:
-  print("deu ruim o story de dog")
-  pass
+#try:
+bot = MyIGBot(USUARIO, PASSWORD)
+get_random_dog('dog.jpeg')
+formatImage('dog.jpeg')
+response = bot.upload_story('dog.jpeg')
+#cl.photo_upload_to_story('dog.jpeg')
+print("story de dog foi")
+#except:
+ # print("deu ruim o story de dog")
+  #pass
 
 
 #logging with instragrapi
