@@ -14,11 +14,11 @@ CAT_KEY = os.environ.get("CAT_KEY")
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 USUARIO = os.environ.get("USUARIO")
-SENHA = os.environ.get("SENHA")
+#SENHA = os.environ.get("SENHA")
 
 #logging with myIG
 try:
-   bot = MyIGBot(USERNAME, PASSWORD)
+#   bot = MyIGBot(USERNAME, PASSWORD)
 except:
   pass
 
@@ -95,11 +95,12 @@ def get_random_dog(filename: str='temp') -> None:
 
 #logar na outra conta e postar dog
 #try:
-botter = MyIGBot(USUARIO, SENHA)
+cl = Client()
+cl.login(USUARIO, PASSWORD)
 get_random_dog('dog.jpeg')
 formatImage('dog.jpeg')
-response = botter.upload_story('dog.jpeg')
-#cl.photo_upload_to_story('dog.jpeg')
+#response = botter.upload_story('dog.jpeg')
+cl.photo_upload_to_story('dog.jpeg')
 print("story de dog foi")
 #except:
  # print("deu ruim o story de dog")
