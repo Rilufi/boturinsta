@@ -1,11 +1,11 @@
 name: Doglufi
 
 
-on: push
+on:
 
-   # schedule:
+    schedule:
 
-   #     - cron: '0 * * * *'
+        - cron: '30 * * * *'
 
 
 jobs:
@@ -41,7 +41,7 @@ jobs:
           pip install -r requirements.txt
 
       # Use HEREDOC for `run` to escape possible single and double quotes in the message.
-      - name: cat story 🐱
+      - name: dog story 🐶
         env:
                   USUARIO: ${{ secrets.USUARIO }}
 
