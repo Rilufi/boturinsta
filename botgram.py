@@ -49,7 +49,7 @@ def formatImage(image):
     #~ Resize and spawn multiple image of cat in the background
     wPercent = (216/float(originalCat.size[0]))
     hSize = int((float(originalCat.size[1])*float(wPercent)))
-    smallCat = originalCat.resize((216,hSize), Image.Resampling.LANCZOS)
+    smallCat = originalCat.resize((216,hSize), Image.LANCZOS)#Resampling.LANCZOS)
 
     #~ Reduce brightness & blur, goal is to put in foreground the main cat
     smallCat = ImageEnhance.Brightness(smallCat).enhance(.75)
@@ -64,7 +64,7 @@ def formatImage(image):
     if cat.size[0] > 1000 or cat.size[0] < 800:
         wPercent = (1000/float(cat.size[0]))
         hSize = int((float(cat.size[1])*float(wPercent)))
-        cat = cat.resize((1000,hSize), Image.Resampling.LANCZOS)
+        cat = cat.resize((1000,hSize), Image.LANCZOS)#Resampling.LANCZOS)
 
     wPos = int((1080-cat.size[0])/2)
     hPos = int((1920-cat.size[1])/2)
