@@ -77,8 +77,8 @@ except:
 
 
 #hashtags to be followed/liked
-tags_odd = ['dog', 'doglife', 'dogsofinstagram','doglovers', ]
-tags_even = ['dogs', 'dogstagram',  'instadog', 'puppy', 'dogoftheday']
+tags_odd = ['dog', 'doglife', 'dogsofinstagram','doglovers', 'dogoftheday']
+tags_even = ['dogs', 'dogstagram', 'instadog', 'puppy', 'doglover']
 
 #function for liking and following
 def catliker(hash):
