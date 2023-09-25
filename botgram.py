@@ -18,7 +18,8 @@ USUARIO = os.environ.get("USUARIO")
 
 #logging with myIG
 try:
-  bot = MyIGBot(USERNAME, PASSWORD)
+  cl = Client(request_timeout=7)
+  cl.login(USERNAME, PASSWORD)
   print('gato logado')
 except:
   print('gato deslogado')
@@ -78,7 +79,7 @@ def formatImage(image):
 try:
   formatImage('gato.jpeg')
 #  response = bot.upload_story('gato.jpeg')
-  #cl.photo_upload_to_story('gato.jpeg')
+  cl.photo_upload_to_story('gato.jpeg')
   print("story de gato foi")
 except:
   print("deu ruim o story de gato")
