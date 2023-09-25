@@ -13,8 +13,6 @@ from datetime import datetime
 CAT_KEY = os.environ.get("CAT_KEY")
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
-USUARIO = os.environ.get("USUARIO")
-#SENHA = os.environ.get("SENHA")
 
 #logging with myIG
 try:
@@ -84,36 +82,6 @@ try:
 except:
   print("deu ruim o story de gato")
 
-
-#pegar foto de dog
-def get_random_dog(filename: str='temp') -> None:
-
-    r = requests.get('https://dog.ceo/api/breeds/image/random')
-    rd = json.loads(r.content)
-    r2 = requests.get(rd['message'])
-
-    with open(filename, 'wb') as image:
-        for chunk in r2:
-            image.write(chunk)
-
-#logar na outra conta e postar dog
-#try:
-cl = Client(request_timeout=7)
-cl.login(USUARIO, PASSWORD)
-print('dog logado')
-get_random_dog('dog.jpeg')
-formatImage('dog.jpeg')
-#response = botter.upload_story('dog.jpeg')
-cl.photo_upload_to_story('dog.jpeg')
-print("story de dog foi")
-#except:
- # print("deu ruim o story de dog")
-  #pass
-
-
-#logging with instragrapi
-#cl = Client(request_timeout=7)
-#cl.login(USERNAME, PASSWORD)
 
 #hashtags to be followed/liked
 tags_odd = ['cats', 'catlife', 'catsofinstagram','catlovers', 'catmemes']
