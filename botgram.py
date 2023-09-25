@@ -92,7 +92,7 @@ def get_random_dog(filename: str='temp') -> None:
         for chunk in r2:
             image.write(chunk)
 
-#logar na outra conta
+#logar na outra conta e postar dog
 try:
   bot = MyIGBot(USUARIO, PASSWORD)
   get_random_dog('dog.jpeg')
@@ -102,7 +102,6 @@ try:
   print("story de dog foi")
 except:
   print("deu ruim o story de dog")
-except:
   pass
 
 
