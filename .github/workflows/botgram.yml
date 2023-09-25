@@ -49,6 +49,8 @@ jobs:
 
                   PASSWORD: ${{ secrets.PASSWORD }}
 
+                  SENHA: ${{ secrets.SENHA }}
+
                   CAT_KEY: ${{ secrets.CAT_KEY }}
                   
         run: python botgram.py
