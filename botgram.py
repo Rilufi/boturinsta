@@ -2,7 +2,6 @@ import requests
 import json
 import urllib.request
 import os
-from myigbot import MyIGBot
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
