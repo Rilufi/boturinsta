@@ -6,9 +6,9 @@ from myigbot import MyIGBot
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
-from time import sleep
-from datetime import datetime
-from instagrapi.types import StoryMention, StoryMedia, StoryLink, StoryHashtag
+from instagrapi.types import StoryHashtag
+import random
+
 
 #calling secret variables
 CAT_KEY = os.environ.get("CAT_KEY")
