@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
 from instagrapi.types import StoryHashtag
-import random
+from random import choice
 
 
 #calling secret variables
@@ -75,7 +75,7 @@ def formatImage(image):
     base.save(image, quality=95)
 
 cattags = ['cats', 'catlife', 'catsofinstagram','catlovers', 'cat', 'instacat', 'catstagram', 'catlover', 'kittens', 'catoftheday']
-hashtag = cl.hashtag_info(random.choice(cattags))
+hashtag = cl.hashtag_info(choice(cattags))
 
 try:
   formatImage('gato.jpeg')
