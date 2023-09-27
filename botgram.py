@@ -8,6 +8,7 @@ import math
 from instagrapi import Client
 from time import sleep
 from datetime import datetime
+from instagrapi.types import StoryMention, StoryMedia, StoryLink, StoryHashtag
 
 #calling secret variables
 CAT_KEY = os.environ.get("CAT_KEY")
@@ -74,10 +75,12 @@ def formatImage(image):
     base.paste(cat, (wPos, hPos))
     base.save(image, quality=95)
 
+hashtag = ['cats', 'catlife', 'catsofinstagram','catlovers', 'cat', 'instacat', 'catstagram', 'catlover', 'kittens', 'catoftheday']
+
 try:
   formatImage('gato.jpeg')
 #  response = bot.upload_story('gato.jpeg')
-  cl.photo_upload_to_story('gato.jpeg')
+  cl.photo_upload_to_story('gato.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
   print("story de gato foi")
 except:
   print("deu ruim o story de gato")
