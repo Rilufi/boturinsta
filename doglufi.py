@@ -2,12 +2,12 @@ import requests
 import json
 import urllib.request
 import os
-from myigbot import MyIGBot
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
-from time import sleep
-from datetime import datetime
+from instagrapi.types import StoryHashtag
+import random
+
 
 #calling secret variables
 USUARIO = os.environ.get("USUARIO")
@@ -66,46 +66,15 @@ def get_random_dog(filename: str='temp') -> None:
         for chunk in r2:
             image.write(chunk)
 
+dogtags = ['dog', 'doglife', 'dogsofinstagram','doglovers', 'dogoftheday', 'dogs', 'dogstagram', 'instadog', 'puppy', 'doglover']
+hashtag = cl.hashtag_info(random.choice(dogtags))
+
+
 try:
   get_random_dog('dog.jpeg')
   formatImage('dog.jpeg')
-  cl.photo_upload_to_story('dog.jpeg')
+  cl.photo_upload_to_story('dog.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])#[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
   print("story de dog foi")
 except:
   print("deu ruim o story de dog")
   pass
-
-
-#hashtags to be followed/liked
-tags_odd = ['dog', 'doglife', 'dogsofinstagram','doglovers', 'dogoftheday']
-tags_even = ['dogs', 'dogstagram', 'instadog', 'puppy', 'doglover']
-
-#function for liking and following
-def catliker(hash):
-    sleep(60)
-    medias = cl.hashtag_medias_recent_v1(hash, amount=1)
-    dicmed = medias[0].dict()
-    id = dicmed.get('id')
-#    print(dicmed.get('code'))
-    pk = dicmed['user'].get('pk')
-    sleep(60)
-    cl.media_like(id)
-    sleep(60)
-    cl.user_follow(pk)
-
-def tagger(tags):
-    for tag in tags:
-        try:
-           catliker(tag)
-           print(f"#{tag} foi")
-        except:
-           print(f"#{tag} num foi")
-
-#get the hour
-#data_e_hora_atuais = datetime.now()
-#hour = data_e_hora_atuais.strftime('%H')
-
-#if (int(hour) % 2) == 0:
-#   tagger(tags_even)
-#else:
-#   tagger(tags_odd)
