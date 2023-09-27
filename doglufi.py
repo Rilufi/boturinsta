@@ -102,10 +102,10 @@ def tagger(tags):
            print(f"#{tag} num foi")
 
 #get the hour
-data_e_hora_atuais = datetime.now()
-hour = data_e_hora_atuais.strftime('%H')
+#data_e_hora_atuais = datetime.now()
+#hour = data_e_hora_atuais.strftime('%H')
 
-if (int(hour) % 2) == 0:
-   tagger(tags_even)
-else:
-   tagger(tags_odd)
+#if (int(hour) % 2) == 0:
+#   tagger(tags_even)
+#else:
+#   tagger(tags_odd)
