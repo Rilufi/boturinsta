@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
 from instagrapi.types import StoryHashtag
-import random
+from random import choice
 
 
 #calling secret variables
@@ -67,7 +67,7 @@ def get_random_dog(filename: str='temp') -> None:
             image.write(chunk)
 
 dogtags = ['dog', 'doglife', 'dogsofinstagram','doglovers', 'dogoftheday', 'dogs', 'dogstagram', 'instadog', 'puppy', 'doglover']
-hashtag = cl.hashtag_info(random.choice(dogtags))
+hashtag = cl.hashtag_info(choice(dogtags))
 
 
 try:
