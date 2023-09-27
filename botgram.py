@@ -62,7 +62,6 @@ def formatImage(image):
         for j in range( math.ceil(base.size[0]/smallCat.size[0]) ):
             base.paste(smallCat, (j*smallCat.size[0],i*smallCat.size[1]))
 
-
     #~ Resize the image to fit, if it's too large (>1000) or too small (<800)
     if cat.size[0] > 1000 or cat.size[0] < 800:
         wPercent = (1000/float(cat.size[0]))
@@ -75,47 +74,12 @@ def formatImage(image):
     base.paste(cat, (wPos, hPos))
     base.save(image, quality=95)
 
-hashtag = ['cats', 'catlife', 'catsofinstagram','catlovers', 'cat', 'instacat', 'catstagram', 'catlover', 'kittens', 'catoftheday']
+cattags = ['cats', 'catlife', 'catsofinstagram','catlovers', 'cat', 'instacat', 'catstagram', 'catlover', 'kittens', 'catoftheday']
+hashtag = cl.hashtag_info(random.choice(cattags))
 
 try:
   formatImage('gato.jpeg')
-#  response = bot.upload_story('gato.jpeg')
-  cl.photo_upload_to_story('gato.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
+  cl.photo_upload_to_story('gato.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])#[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
   print("story de gato foi")
 except:
   print("deu ruim o story de gato")
-
-
-#hashtags to be followed/liked
-tags_odd = ['cats', 'catlife', 'catsofinstagram','catlovers', 'catmemes']
-tags_even = ['instacat', 'catstagram',  'adventurecat', 'kittens', 'catoftheday']
-
-#function for liking and following
-def catliker(hash):
-    sleep(60)
-    medias = cl.hashtag_medias_recent_v1(hash, amount=1)
-    dicmed = medias[0].dict()
-    id = dicmed.get('id')
-#    print(dicmed.get('code'))
-    pk = dicmed['user'].get('pk')
-    sleep(60)
-    cl.media_like(id)
-    sleep(60)
-    cl.user_follow(pk)
-
-def tagger(tags):
-    for tag in tags:
-        try:
-           catliker(tag)
-           print(f"#{tag} foi")
-        except:
-           print(f"#{tag} num foi")
-
-#get the hour
-data_e_hora_atuais = datetime.now()
-hour = data_e_hora_atuais.strftime('%H')
-
-#if (int(hour) % 2) == 0:
-#   tagger(tags_even)
-#else:
-#   tagger(tags_odd)
