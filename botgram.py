@@ -76,9 +76,20 @@ def formatImage(image):
 cattags = ['cats', 'catlife', 'catsofinstagram','catlovers', 'cat', 'instacat', 'catstagram', 'catlover', 'kittens', 'catoftheday']
 hashtag = cl.hashtag_info(choice(cattags))
 
+def catliker(hash):
+    medias = cl.hashtag_medias_recent_v1(hash, amount=1)
+    dicmed = medias[0].dict()
+    id = dicmed.get('id')
+    print(dicmed.get('code'))
+    pk = dicmed['user'].get('pk')
+    cl.media_like(id)
+    cl.user_follow(pk)
+
 try:
   formatImage('gato.jpeg')
   cl.photo_upload_to_story('gato.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])#[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
   print("story de gato foi")
+  catliker(hashtag)
+  print("like e follow foi")
 except:
   print("deu ruim o story de gato")
