@@ -89,7 +89,7 @@ try:
   formatImage('gato.jpeg')
   cl.photo_upload_to_story('gato.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])#[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
   print("story de gato foi")
-  catliker(hashtag)
-  print("like e follow foi")
+  #catliker(hashtag)
+  #print("like e follow foi")
 except:
   print("deu ruim o story de gato")
