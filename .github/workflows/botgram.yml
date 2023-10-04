@@ -50,5 +50,7 @@ jobs:
                   CAT_KEY: ${{ secrets.CAT_KEY }}
 
                   TELE_USER: ${{ secrets.TELE_USER }}
+
+                  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
                   
         run: python botgram.py
