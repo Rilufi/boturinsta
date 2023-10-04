@@ -2,3 +2,4 @@ instagrapi
 pillow>=8.1.1
 beautifulsoup4
 opencv-python
+pyTelegramBotAPI
