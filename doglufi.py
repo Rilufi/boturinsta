@@ -7,11 +7,15 @@ import math
 from instagrapi import Client
 from instagrapi.types import StoryHashtag
 from random import choice
-
+import telebot
 
 #calling secret variables
 USUARIO = os.environ.get("USUARIO")
 SENHA = os.environ.get("SENHA")
+tele_user = os.environ.get("TELE_USER")
+TOKEN = os.environ["TELEGRAM_TOKEN"]
+bot = telebot.TeleBot(TOKEN)
+
 
 #logging with myIG
 try:
@@ -19,6 +23,7 @@ try:
   cl.login(USUARIO, SENHA)
   print('dog logado')
 except:
+  bot.send_message(tele_user,  'doglufi com problema')
   print('dog deslogado')
   pass
 
