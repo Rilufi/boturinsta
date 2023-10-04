@@ -47,4 +47,8 @@ jobs:
 
                   SENHA: ${{ secrets.SENHA }}
 
+                  TELE_USER: ${{ secrets.TELE_USER }}
+
+                  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+                  
         run: python doglufi.py
