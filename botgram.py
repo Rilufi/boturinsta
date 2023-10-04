@@ -86,16 +86,17 @@ def change_password_handler(username):
 
 
 #logging with myIG
-try:
+#try:
+if __name__ == "__main__":
   cl = Client(request_timeout=7)
   cl.challenge_code_handler = challenge_code_handler
   cl.change_password_handler = change_password_handler
   cl.login(IG_USERNAME, IG_PASSWORD)
   print('gato tentando logar')
-except:
-  cl = Client(request_timeout=7)
-  cl.login(USERNAME, PASSWORD)
-  print('gato logado')
+#except:
+#  cl = Client(request_timeout=7)
+#  cl.login(USERNAME, PASSWORD)
+#  print('gato logado')
   
 
 #get the cats
