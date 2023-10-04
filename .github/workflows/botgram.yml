@@ -49,8 +49,6 @@ jobs:
 
                   CAT_KEY: ${{ secrets.CAT_KEY }}
 
-                  EMAIL_USER: ${{ secrets.EMAIL_USER }}
-
-                  EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+                  TELE_USER: ${{ secrets.TELE_USER }}
                   
         run: python botgram.py
