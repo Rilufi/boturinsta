@@ -1,11 +1,11 @@
 name: Boturinsta
 
 
-on:
+on: push
 
-    schedule:
+#    schedule:
 
-        - cron: '0 * * * *'
+#        - cron: '0 * * * *'
 
 
 jobs:
@@ -48,5 +48,9 @@ jobs:
                   PASSWORD: ${{ secrets.PASSWORD }}
 
                   CAT_KEY: ${{ secrets.CAT_KEY }}
+
+                  EMAIL_USER: ${{ secrets.EMAIL_USER }}
+
+                  EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
                   
         run: python botgram.py
