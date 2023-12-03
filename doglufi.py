@@ -71,15 +71,15 @@ def get_random_dog(filename: str='temp') -> None:
         for chunk in r2:
             image.write(chunk)
 
-dogtags = ['dog', 'doglife', 'dogsofinstagram','doglovers', 'dogoftheday', 'dogs', 'dogstagram', 'instadog', 'puppy', 'doglover']
-hashtag = cl.hashtag_info(choice(dogtags))
+insta_string = f""" Dog do dia {data}
+
+#DogOfTheDay #CachorroDoDia"""
 
 
 try:
   get_random_dog('dog.jpeg')
-  formatImage('dog.jpeg')
-  cl.photo_upload_to_story('dog.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])#[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
-  print("story de dog foi")
+  cl.photo_upload('dog.jpeg', insta_string)
+  print("foto publicada no insta")
 except:
-  print("deu ruim o story de dog")
-  pass
+  print("deu ruim o post de dog")
+  bot.send_message(tele_user,  'doglufi com problema')
