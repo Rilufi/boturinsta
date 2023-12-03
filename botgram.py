@@ -8,6 +8,17 @@ from instagrapi import Client
 from instagrapi.types import StoryHashtag
 from random import choice
 import telebot
+from datetime import date, timezone, timedelta, datetime
+
+#get the time with timezone
+fuso_horario = timezone(timedelta(hours=-3))
+data_e_hora_atuais = datetime.now()
+data_e_hora_sao_paulo = data_e_hora_atuais.astimezone(fuso_horario)
+hora = data_e_hora_sao_paulo.strftime('%H')
+
+#what day is it?
+today = date.today() # ex 2015-10-31
+data = today.strftime("%d/%m")
 
 #calling secret variables
 CAT_KEY = os.environ.get("CAT_KEY")
@@ -80,6 +91,10 @@ def formatImage(image):
 cattags = ['cats', 'catlife', 'catsofinstagram','catlovers', 'cat', 'instacat', 'catstagram', 'catlover', 'kittens', 'catoftheday']
 hashtag = cl.hashtag_info(choice(cattags))
 
+insta_string = f""" Gato do dia {data}
+
+#CatOfTheDay #GatoDoDia"""
+
 def catliker(hash):
     medias = cl.hashtag_medias_recent_v1(hash, amount=1)
     dicmed = medias[0].dict()
@@ -91,9 +106,9 @@ def catliker(hash):
 
 try:
   formatImage('gato.jpeg')
-  cl.photo_upload_to_story('gato.jpeg', hashtags=[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])#[StoryHashtag(hashtag=hashtag, x=0.23, y=0.32, width=0.5, height=0.22)])
-  print("story de gato foi")
+  cl.photo_upload(image, insta_string)
+  print("foto publicada no insta")  
   #catliker(hashtag)
   #print("like e follow foi")
 except:
-  print("deu ruim o story de gato")
+  print("deu ruim o post de gato")
