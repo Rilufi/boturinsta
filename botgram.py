@@ -92,10 +92,9 @@ insta_string = f""" Gato do dia {data}
 
 #CatOfTheDay #GatoDoDia"""
 
-cl.photo_upload('gato.jpeg', insta_string)
-#try:
- # formatImage('gato.jpeg')
-  #cl.photo_upload(image, insta_string)
-  #print("foto publicada no insta")
-#except:
-#  print("deu ruim o post de gato")
+try:
+  cl.photo_upload('gato.jpeg', insta_string)
+  print("foto publicada no insta")
+except:
+  print("deu ruim o post de gato")
+  bot.send_message(tele_user,  'boturinsta com problema')
