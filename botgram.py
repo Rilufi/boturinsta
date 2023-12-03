@@ -92,9 +92,10 @@ insta_string = f""" Gato do dia {data}
 
 #CatOfTheDay #GatoDoDia"""
 
-try:
-  formatImage('gato.jpeg')
-  cl.photo_upload(image, insta_string)
-  print("foto publicada no insta")
-except:
-  print("deu ruim o post de gato")
+cl.photo_upload(gato.jpeg, insta_string)
+#try:
+ # formatImage('gato.jpeg')
+  #cl.photo_upload(image, insta_string)
+  #print("foto publicada no insta")
+#except:
+#  print("deu ruim o post de gato")
