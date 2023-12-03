@@ -1,11 +1,11 @@
 name: Doglufi
 
 
-on:
+on: push
 
   #  schedule:
 
-#        - cron: '30 */11 * * *'
+#        - cron: '0 10 * * *'
 
 
 jobs:
