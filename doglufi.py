@@ -8,6 +8,17 @@ from instagrapi import Client
 from instagrapi.types import StoryHashtag
 from random import choice
 import telebot
+from datetime import date, timezone, timedelta, datetime
+
+#get the time with timezone
+fuso_horario = timezone(timedelta(hours=-3))
+data_e_hora_atuais = datetime.now()
+data_e_hora_sao_paulo = data_e_hora_atuais.astimezone(fuso_horario)
+hora = data_e_hora_sao_paulo.strftime('%H')
+
+#what day is it?
+today = date.today() # ex 2015-10-31
+data = today.strftime("%d/%m")
 
 #calling secret variables
 USUARIO = os.environ.get("USUARIO")
