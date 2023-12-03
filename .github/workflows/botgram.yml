@@ -1,11 +1,11 @@
 name: Boturinsta
 
 
-on:
+on: push
 
   #  schedule:
 
- #       - cron: '0 */11 * * *'
+ #       - cron: '0 10 * * *'
 
 
 jobs:
