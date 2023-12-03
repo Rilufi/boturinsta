@@ -92,7 +92,7 @@ insta_string = f""" Gato do dia {data}
 
 #CatOfTheDay #GatoDoDia"""
 
-cl.photo_upload(gato.jpeg, insta_string)
+cl.photo_upload('gato.jpeg', insta_string)
 #try:
  # formatImage('gato.jpeg')
   #cl.photo_upload(image, insta_string)
