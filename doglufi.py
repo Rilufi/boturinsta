@@ -87,10 +87,20 @@ insta_string = f""" Dog do dia {data}
 #DogOfTheDay #CachorroDoDia"""
 
 
-try:
-  get_random_dog('dog.jpeg')
-  cl.photo_upload('dog.jpeg', insta_string)
-  print("foto publicada no insta")
-except:
-  print("deu ruim o post de dog")
-  bot.send_message(tele_user,  'doglufi com problema')
+max_retries = 5
+retry_count = 0
+
+while retry_count < max_retries:
+    try:
+        get_random_dog('dog.jpeg')
+        cl.photo_upload('dog.jpeg', insta_string)
+        print("foto publicada no insta")
+        break  # Break the loop if upload is successful
+    except ClientError as e:
+        print(f"Error during photo upload: {e}")
+        retry_count += 1
+        if retry_count < max_retries:
+            print(f"Retrying... (Attempt {retry_count}/{max_retries})")
+        else:
+            print("Max retries reached. Photo upload failed.")
+            bot.send_message(tele_user, 'doglufi com problema')
