@@ -88,13 +88,30 @@ def formatImage(image):
     base.paste(cat, (wPos, hPos))
     base.save(image, quality=95)
 
-insta_string = f""" Gato do dia {data}
+max_retries = 5
+retry_count = 0
+
+while retry_count < max_retries:
+    try:
+        response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
+        todos = json.loads(response.text)
+        site = todos[0].get('url')
+        r = requests.get(site, allow_redirects=True)
+        open('gato.jpeg', 'wb').write(r.content)
+        formatImage('gato.jpeg')
+
+        insta_string = f""" Gato do dia {data}
 
 #CatOfTheDay #GatoDoDia"""
 
-try:
-  cl.photo_upload('gato.jpeg', insta_string)
-  print("foto publicada no insta")
-except:
-  print("deu ruim o post de gato")
-  bot.send_message(tele_user,  'boturinsta com problema')
+        cl.photo_upload('gato.jpeg', insta_string)
+        print("foto publicada no insta")
+        break  # Break the loop if upload is successful
+    except ClientError as e:
+        print(f"Error during photo upload: {e}")
+        retry_count += 1
+        if retry_count < max_retries:
+            print(f"Retrying... (Attempt {retry_count}/{max_retries})")
+        else:
+            print("Max retries reached. Photo upload failed.")
+            bot.send_message(tele_user, 'boturinsta com problema')
