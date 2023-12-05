@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
 from instagrapi.types import StoryHashtag
+from instagrapi.exceptions import ClientError
 from random import choice
 import telebot
 from datetime import date, timezone, timedelta, datetime
