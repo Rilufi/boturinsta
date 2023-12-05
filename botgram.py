@@ -99,7 +99,7 @@ while retry_count < max_retries:
         site = todos[0].get('url')
         r = requests.get(site, allow_redirects=True)
         open('gato.jpeg', 'wb').write(r.content)
-        formatImage('gato.jpeg')
+     #   formatImage('gato.jpeg')
 
         insta_string = f""" Gato do dia {data}
 
