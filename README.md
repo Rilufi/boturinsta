@@ -1,6 +1,6 @@
 # Boturinsta
 
-Posting daily pets on Instagram.
+Posting daily pets on Instagram. You can find the results on: [Cats](https://www.instagram.com/boturinsta/) and [Dogs](https://www.instagram.com/doglufi).
 
 ## Requirements
 We employ here the unnoficial Instagram private API [instagrapi](https://subzeroid.github.io/instagrapi/)
@@ -16,7 +16,7 @@ I'm trying to deploy a function for following accounts and liking pictures that 
 
 # Agora em português porque nois é BR
 
-Publicando pets todo dia no Instagram.
+Publicando pets todo dia no Instagram. Vocês podem ver os resultados em: [Gatos](https://www.instagram.com/boturinsta/) e [Cachorros](https://www.instagram.com/doglufi).
 
 ## Requisitos
 Aqui usamos a API privada não oficial do Instagram chamada [instagrapi](https://subzeroid.github.io/instagrapi/).
