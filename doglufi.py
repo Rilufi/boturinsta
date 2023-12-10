@@ -1,13 +1,9 @@
 import requests
 import json
-import urllib.request
 import os
-from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import math
 from instagrapi import Client
-from instagrapi.types import StoryHashtag
 from instagrapi.exceptions import ClientError
-from random import choice
 import telebot
 from datetime import date, timezone, timedelta, datetime
 
@@ -56,7 +52,6 @@ def get_random_dog(filename: str='temp') -> None:
 insta_string = f""" Dog do dia {data}
 
 #DogOfTheDay #CachorroDoDia"""
-
 
 max_retries = 3
 retry_count = 0
