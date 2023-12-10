@@ -31,13 +31,18 @@ bot = telebot.TeleBot(TOKEN)
 
 #logging with myIG
 try:
-  cl = Client(request_timeout=7)
-  cl.login(USERNAME, PASSWORD)
-  print('gato logado')
-except:
-  print('gato deslogado')
-  bot.send_message(tele_user,  'boturinsta com problema')
-  pass
+    cl = Client(request_timeout=7)
+    cl.login(USERNAME, PASSWORD)
+    print('gato logado')
+except ClientError as e:
+    if e.status_code == 403:
+        print(f"Error during login: {e}")
+        print("Exiting script due to 403 Forbidden error.")
+        exit()
+    else:
+        print(f"Error during login: {e}")
+        bot.send_message(tele_user, 'boturinsta com problema')
+        pass
 
 #get the cats
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
@@ -89,7 +94,7 @@ def formatImage(image):
     base.paste(cat, (wPos, hPos))
     base.save(image, quality=95)
 
-max_retries = 5
+max_retries = 3
 retry_count = 0
 
 while retry_count < max_retries:
@@ -99,7 +104,6 @@ while retry_count < max_retries:
         site = todos[0].get('url')
         r = requests.get(site, allow_redirects=True)
         open('gato.jpeg', 'wb').write(r.content)
-     #   formatImage('gato.jpeg')
 
         insta_string = f""" Gato do dia {data}
 
@@ -113,6 +117,9 @@ while retry_count < max_retries:
         retry_count += 1
         if retry_count < max_retries:
             print(f"Retrying... (Attempt {retry_count}/{max_retries})")
+            if e.status_code == 403:
+                print("Exiting script due to 403 Forbidden error.")
+                break  # Break the loop if 403 Forbidden error occurs during upload
         else:
             print("Max retries reached. Photo upload failed.")
             bot.send_message(tele_user, 'boturinsta com problema')
