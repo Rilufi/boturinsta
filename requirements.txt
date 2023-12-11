@@ -1,2 +1,3 @@
 instagrapi
 pyTelegramBotAPI
+Pillow>=8.1.1
