@@ -73,5 +73,3 @@ while retry_count < max_retries:
         else:
             print("Max retries reached. Photo upload failed.")
             bot.send_message(tele_user, 'doglufi com problema')
-                print("Exiting script due to 403 Forbidden error.")
-                break  # Break the loop if 403 Forbidden error occurs during upload
