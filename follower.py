@@ -12,17 +12,20 @@ password = os.environ.get("SENHA")
 client = Client(request_timeout=7)
 client.login(username, password)
 
-# Set the custom user agent in the session headers
-client.session.headers.update({
+# Set the custom user agent in the headers
+headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-})
-
+}
 
 # Set the target account or hashtag related to dogs
 target_account = "dogsofinstagram"
 
 # Search for users related to dogs
-results = client.top_search(target_account)#, count=10)  # Adjust count as needed
+response = requests.get(
+    f"https://www.instagram.com/web/search/topsearch/?context=blended&query={target_account}&rank_token=0.7763938004511706&include_reel=true",
+    headers=headers
+)
+results = response.json().get('users', [])
 
 # Extract user IDs from the search results
 user_ids = [result["user"]["pk"] for result in results]
