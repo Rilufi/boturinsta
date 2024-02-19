@@ -26,9 +26,11 @@ response = requests.get(
     headers=headers
 )
 results = response.json().get('users', [])
+print(results)
 
 # Extract user IDs from the search results
 user_ids = [result["user"]["pk"] for result in results]
+print(user_ids)
 
 # Like and follow accounts related to dogs with randomized sleep intervals
 for user_id in user_ids:
