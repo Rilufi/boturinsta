@@ -3,3 +3,4 @@ instapy
 pyTelegramBotAPI
 Pillow>=8.1.1
 emoji==1.7
+clarifai
