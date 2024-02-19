@@ -2,6 +2,7 @@ from instagrapi import Client
 import time
 import random
 import os
+import requests
 
 #calling secret variables
 username = os.environ.get("USUARIO")
@@ -11,10 +12,11 @@ password = os.environ.get("SENHA")
 client = Client(request_timeout=7)
 client.login(username, password)
 
-# Set the custom user agent in the headers
-client.headers.update({
+# Set the custom user agent in the session headers
+client.session.headers.update({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 })
+
 
 # Set the target account or hashtag related to dogs
 target_account = "dogsofinstagram"
