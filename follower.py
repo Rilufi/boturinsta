@@ -1,27 +1,25 @@
-from instapy import InstaPy
 import os
-from clarifai.rest import ClarifaiApp
+from instabot import Bot
+
 
 #calling secret variables
 username = os.environ.get("USUARIO")
 password = os.environ.get("SENHA")
 
+# Create an Instabot instance
+bot = Bot()
+bot.login(username=username, password=password)
+
 # Set the target account or hashtag related to dogs
 target_account = "dogsofinstagram"
 
-# Create an InstaPy session
-session = InstaPy(username=username, password=password)
+# Get the user IDs of accounts related to dogs
+user_ids = bot.get_hashtag_users(target_account)
 
-# Login to Instagram
-session.login()
+# Like and follow accounts related to dogs
+for user_id in user_ids:
+    bot.like(user_id)
+    bot.follow(user_id)
 
-# Set up actions to like and follow accounts related to dogs
-session.set_relationship_bounds(enabled=True, max_followers=1000)
-session.set_do_follow(True, percentage=50)
-session.set_user_interact(amount=3, randomize=True, percentage=80, media="Photo")
-
-# Interact with posts from the target account
-session.like_by_targets([target_account], amount=5, randomize=True)
-
-# End the session
-session.end()
+# Logout after completing actions
+bot.logout()
