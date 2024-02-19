@@ -1,6 +1,6 @@
 import os
 from instabot import Bot
-
+import time
 
 #calling secret variables
 username = os.environ.get("USUARIO")
@@ -16,12 +16,12 @@ target_account = "dogsofinstagram"
 # Get the user IDs of accounts related to dogs
 user_ids = bot.get_hashtag_users(target_account)
 
-# Like and follow accounts related to dogs with sleep intervals
+# Like and follow accounts related to dogs with extended sleep intervals
 for user_id in user_ids:
     bot.like(user_id)
-    time.sleep(10)  # Sleep for 10 seconds between likes
+    time.sleep(15)  # Sleep for 15 seconds between likes
     bot.follow(user_id)
-    time.sleep(15)  # Sleep for 15 seconds between follows
+    time.sleep(30)  # Sleep for 30 seconds between follows
 
 # Logout after completing actions
 bot.logout()
