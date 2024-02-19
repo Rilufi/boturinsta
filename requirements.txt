@@ -2,3 +2,4 @@ instagrapi
 instapy
 pyTelegramBotAPI
 Pillow>=8.1.1
+emoji
