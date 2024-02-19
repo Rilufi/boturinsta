@@ -1,5 +1,6 @@
 from instapy import InstaPy
 import os
+from clarifai.rest import ClarifaiApp
 
 #calling secret variables
 username = os.environ.get("USUARIO")
