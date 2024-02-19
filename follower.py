@@ -14,8 +14,11 @@ client.login(username, password)
 # Set the target account or hashtag related to dogs
 target_account = "dogsofinstagram"
 
-# Get the user IDs of accounts related to dogs
-user_ids = [user.pk for user in client.user_search(target_account)]
+# Search for users related to dogs
+results = client.search(target_account, count=10)  # Adjust count as needed
+
+# Extract user IDs from the search results
+user_ids = [result["user"]["pk"] for result in results]
 
 # Like and follow accounts related to dogs with randomized sleep intervals
 for user_id in user_ids:
@@ -26,4 +29,3 @@ for user_id in user_ids:
 
 # Logout after completing actions
 client.logout()
-
