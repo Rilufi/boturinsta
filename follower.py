@@ -1,6 +1,7 @@
 from instagrapi import Client
 import time
 import random
+import os
 
 #calling secret variables
 username = os.environ.get("USUARIO")
