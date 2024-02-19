@@ -15,7 +15,7 @@ client.login(username, password)
 target_account = "dogsofinstagram"
 
 # Search for users related to dogs
-results = client.recent_search(target_account, count=10)  # Adjust count as needed
+results = client.top_search(target_account, count=10)  # Adjust count as needed
 
 # Extract user IDs from the search results
 user_ids = [result["user"]["pk"] for result in results]
