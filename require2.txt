@@ -1,4 +1,0 @@
-InstagramAPI
-requests
-urllib3
-six
