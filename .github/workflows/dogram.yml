@@ -46,6 +46,8 @@ jobs:
 
                   SENHA: ${{ secrets.SENHA }}
 
+                  DOG_KEY: ${{ secrets.DOG_KEY }}
+
                   TELE_USER: ${{ secrets.TELE_USER }}
 
                   TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
