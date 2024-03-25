@@ -1,5 +1,5 @@
 name: Dognow
-#só pra rodar sem precisad mexer nos schedule
+
 
 on: push
   
