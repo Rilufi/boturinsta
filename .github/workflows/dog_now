@@ -1,0 +1,51 @@
+name: Dognow
+
+
+on: push
+  
+jobs:
+  tweet:
+    name: Insta
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+        
+      - name: Keep this repo alive
+        uses: gautamkrishnar/keepalive-workflow@master
+
+      - name: Set up Python 🐍
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Cache Python packages 💾
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install packages ⚙
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Use HEREDOC for `run` to escape possible single and double quotes in the message.
+      - name: dog story 🐶
+        env:
+                  USUARIO: ${{ secrets.USUARIO }}
+
+                  SENHA: ${{ secrets.SENHA }}
+
+                  DOG_KEY: ${{ secrets.DOG_KEY }}
+
+                  TELE_USER: ${{ secrets.TELE_USER }}
+
+                  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+                  
+        run: python doglufi.py
