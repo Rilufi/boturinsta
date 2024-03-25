@@ -32,14 +32,9 @@ try:
     cl.login(USERNAME, PASSWORD)
     print('cachorro logado')
 except ClientError as e:
-    if e.status_code == 403:
-        print(f"Error during login: {e}")
-        print("Exiting script due to 403 Forbidden error.")
-        exit()
-    else:
-        print(f"Error during login: {e}")
-        bot.send_message(tele_user, 'boturinsta com problema')
-        pass
+    print(f"Error during login: {e}")
+    bot.send_message(tele_user, 'boturinsta com problema')
+    pass
 
 #get the dogs
 url = "https://api.thedogapi.com/v1/images/search?format=json&type=jpeg"
