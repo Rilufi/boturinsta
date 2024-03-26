@@ -52,8 +52,8 @@ def post_instagram_photo():
 
 # Variáveis de ambiente
 DOG_KEY = os.environ.get("DOG_KEY")
-USERNAME = os.environ.get("USERNAME")
-PASSWORD = os.environ.get("PASSWORD")
+USERNAME = os.environ.get("USUARIO")
+PASSWORD = os.environ.get("SENHA")
 tele_user = os.environ.get("TELE_USER")
 TOKEN = os.environ["TELEGRAM_TOKEN"]
 bot = telebot.TeleBot(TOKEN)
