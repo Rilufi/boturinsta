@@ -34,7 +34,8 @@ def post_instagram_photo():
 
     # Gera legenda para a foto do Instagram
     data = date.today().strftime("%d/%m")
-    insta_string = f"""Dog of the day {data}
+    insta_string = f"""Dog do dia {data}
+
 #DogOfTheDay #CachorroDoDia"""
 
     # Tenta fazer o upload da foto para o Instagram
