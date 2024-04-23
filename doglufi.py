@@ -14,10 +14,10 @@ def post_instagram_photo():
         cl = Client(request_timeout=7)
         cl.login(USERNAME, PASSWORD)
         print('Logado no Instagram')
-    except ClientError as e:
-        print(f"Erro durante o login: {e}")
-        bot.send_message(tele_user, 'boturinsta com problema')
-        return
+    except:
+        print("deslodog")
+        bot.send_message(tele_user, 'doglufi com problema')
+        pass
 
     # Obtém URL de uma imagem de cachorro
     url = "https://api.thedogapi.com/v1/images/search?format=json&type=jpeg"
