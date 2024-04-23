@@ -31,15 +31,10 @@ try:
     cl = Client(request_timeout=7)
     cl.login(USERNAME, PASSWORD)
     print('gato logado')
-except ClientError as e:
-    if e.status_code == 403:
-        print(f"Error during login: {e}")
-        print("Exiting script due to 403 Forbidden error.")
-        exit()
-    else:
-        print(f"Error during login: {e}")
-        bot.send_message(tele_user, 'boturinsta com problema')
-        pass
+except:
+    print("deslogato")
+    bot.send_message(tele_user, 'boturinsta com problema')
+    pass
 
 #get the cats
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
