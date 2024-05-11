@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import sys
 import math
 from instagrapi import Client
 from instagrapi.exceptions import ClientError
@@ -34,7 +35,7 @@ try:
 except:
     print("deslogato")
     bot.send_message(tele_user, 'boturinsta com problema pra logar')
-    pass
+    sys.exit()
 
 #get the cats
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
@@ -82,4 +83,4 @@ while retry_count < max_retries:
                 break  # Break the loop if 403 Forbidden error occurs during upload
         else:
             print("Max retries reached. Photo upload failed.")
-            bot.send_message(tele_user, 'boturinsta com problema')
+            bot.send_message(tele_user, 'boturinsta com problema pra postar')
