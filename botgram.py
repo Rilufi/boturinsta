@@ -33,7 +33,7 @@ try:
     print('gato logado')
 except:
     print("deslogato")
-    bot.send_message(tele_user, 'boturinsta com problema')
+    bot.send_message(tele_user, 'boturinsta com problema pra logar')
     pass
 
 #get the cats
