@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import sys
 import math
 from instagrapi import Client
 from instagrapi.exceptions import ClientError, PhotoNotUpload
@@ -16,8 +17,8 @@ def post_instagram_photo():
         print('Logado no Instagram')
     except:
         print("deslodog")
-        bot.send_message(tele_user, 'doglufi com problema')
-        pass
+        bot.send_message(tele_user, 'doglufi com problema pra logar')
+        sys.exit()
 
     # Obtém URL de uma imagem de cachorro
     url = "https://api.thedogapi.com/v1/images/search?format=json&type=jpeg"
@@ -46,10 +47,10 @@ def post_instagram_photo():
         print(f"Erro durante o upload da foto: {e}")
         if "login_required" in str(e):
             print("Login é necessário. Verifique suas credenciais.")
-            bot.send_message(tele_user, 'boturinsta com problema - login necessário')
+            bot.send_message(tele_user, 'doglufi com problema pra postar')
         else:
             print("Erro desconhecido durante o upload da foto.")
-            bot.send_message(tele_user, 'boturinsta com problema - erro desconhecido')
+            bot.send_message(tele_user, 'doglufi com problema pra postar')
 
 # Variáveis de ambiente
 DOG_KEY = os.environ.get("DOG_KEY")
