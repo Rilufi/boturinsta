@@ -7,6 +7,34 @@ from instagrapi import Client
 from instagrapi.exceptions import ClientError
 import telebot
 from datetime import date, timezone, timedelta, datetime
+from PIL import Image
+import google.generativeai as genai
+
+
+# Inicializando api do Gemini
+GOOGLE_API_KEY=os.environ["GOOGLE_API_KEY"]
+genai.configure(api_key=GOOGLE_API_KEY)
+
+model = genai.GenerativeModel('gemini-pro-vision')
+
+def gemini_image(prompt, image_path):
+    # Carregando a imagem
+    imagem = Image.open(image_path)
+
+    # Gerando conteúdo com base na imagem e no prompt
+    response = model.generate_content([prompt, imagem], stream=True)
+
+    # Aguarda a conclusão da iteração antes de acessar os candidatos
+    response.resolve()
+
+    # Verificando a resposta
+    if response.candidates and len(response.candidates) > 0:
+        if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
+            return response.candidates[0].content.parts[0].text
+        else:
+            print("Nenhuma parte de conteúdo encontrada na resposta.")
+    else:
+        print("Nenhum candidato válido encontrado.")
 
 #get the time with timezone
 fuso_horario = timezone(timedelta(hours=-3))
@@ -65,10 +93,13 @@ while retry_count < max_retries:
         site = todos[0].get('url')
         r = requests.get(site, allow_redirects=True)
         open('gato.jpeg', 'wb').write(r.content)
-
+        response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags","gato.jpeg")
+        if response_gemini == None:
+            response_gemini = "#CatOfTheDay #GatoDoDia"
+        else:
+            pass
         insta_string = f""" Gato do dia {data}
-
-#CatOfTheDay #GatoDoDia"""
+{response_gemini}"""
 
         cl.photo_upload('gato.jpeg', insta_string)
         print("foto publicada no insta")
