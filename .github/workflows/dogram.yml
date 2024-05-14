@@ -1,11 +1,11 @@
 name: Doglufi
 
 
-on: push
-  #workflow_run:
-  #  workflows: ["Boturinsta"]
- #   types:
-#      - completed
+on:
+  workflow_run:
+    workflows: ["Boturinsta"]
+    types:
+      - completed
 
 jobs:
   tweet:
