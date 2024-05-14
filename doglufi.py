@@ -7,6 +7,7 @@ from instagrapi import Client
 from instagrapi.exceptions import ClientError, PhotoNotUpload
 import telebot
 from datetime import date, timezone, timedelta, datetime
+from PIL import Image
 import google.generativeai as genai
 
 
