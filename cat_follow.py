@@ -1,4 +1,3 @@
-from credentials import credential_dict
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -10,6 +9,13 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
+
+credential_dict ={
+    'username':os.environ.get("USERNAME"),
+    'password':os.environ.get("PASSWORD")
+}
+
 
 # Função para configurar o driver com opções para evitar detecção de bot
 def configure_driver():
