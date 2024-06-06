@@ -157,10 +157,6 @@ def follow_all(driver):
                 print(f"Foram carregados {new_followers_count - len(followers)} novos seguidores")
                 driver.save_screenshot(f'screenshot_follow_{pager}.png')
                 pager += 1
-#                if new_followers_count == len(followers):
-#                    print("Não há mais novos seguidores para carregar")
-#                    break
-
         print('done')
 
     except TimeoutException:
