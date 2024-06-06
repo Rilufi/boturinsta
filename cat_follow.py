@@ -1,3 +1,4 @@
+from credentials import credential_dict
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -9,35 +10,44 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-import os
 
+# Função para configurar o driver com opções para evitar detecção de bot
+def configure_driver():
+    chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+    chrome_options = Options()
 
-credential_dict ={
-    'username':os.environ.get("USERNAME"),
-    'password':os.environ.get("PASSWORD")
-}
+    # Opções de Chrome para evitar detecção de bot
+    options = [
+        "--headless",
+        "--disable-gpu",
+        "--window-size=1920,1200",
+        "--ignore-certificate-errors",
+        "--disable-extensions",
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-blink-features=AutomationControlled",
+        "--disable-infobars",
+    ]
+    for option in options:
+        chrome_options.add_argument(option)
 
-chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+    # Excluir coleta de switches enable-automation
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
-chrome_options = Options()
-options = [
-    "--headless",
-    "--disable-gpu",
-    "--window-size=1920,1200",
-    "--ignore-certificate-errors",
-    "--disable-extensions",
-    "--no-sandbox",
-    "--disable-dev-shm-usage",
-    "--disable-blink-features=AutomationControlled",
-    "--disable-infobars",
-]
-for option in options:
-    chrome_options.add_argument(option)
+    # Desabilitar a extensão de automação do usuário
+    chrome_options.add_experimental_option("useAutomationExtension", False)
+
+    # Inicializar o driver
+    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+
+    # Alterar a propriedade do valor navigator.webdriver para undefined
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+
+    return driver
 
 def main():
     print("Iniciando o navegador")
-    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+    driver = configure_driver()
     driver.get('https://www.instagram.com/')
     print("Página do Instagram carregada")
 
@@ -112,6 +122,7 @@ def follow_all(driver):
         )
 
         count = 0
+        pager = 0
         while count < 8:
             # Procurar elementos de seguidores
             print("Procurando elementos de seguidores")
@@ -121,7 +132,6 @@ def follow_all(driver):
                 raise TimeoutException("Não foi possível encontrar elementos de seguidores")
 
             print("Elementos de seguidores encontrados")
-            pager = 0
 
             # Seguir os seguidores que ainda não estão sendo seguidos
             for follower in followers:
@@ -141,7 +151,6 @@ def follow_all(driver):
                     continue
 
             if count < 8:
-
                 # Enviar teclas TAB e PAGE_DOWN para descer a lista de seguidores
                 print("Pressionando Tab e depois Page Down para descer na lista de seguidores")
                 body = driver.find_element(By.TAG_NAME, 'body')
@@ -157,6 +166,7 @@ def follow_all(driver):
                 print(f"Foram carregados {new_followers_count - len(followers)} novos seguidores")
                 driver.save_screenshot(f'screenshot_follow_{pager}.png')
                 pager += 1
+
         print('done')
 
     except TimeoutException:
