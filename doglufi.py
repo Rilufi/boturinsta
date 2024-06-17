@@ -2,50 +2,43 @@ import requests
 import json
 import os
 import sys
-import time
+import math
 from instagrapi import Client
 from instagrapi.exceptions import ClientError, PhotoNotUpload
-from instagrapi.types import StoryMention, StoryLink, StoryHashtag
 import telebot
-from datetime import date
+from datetime import date, timezone, timedelta, datetime
 from PIL import Image
 import google.generativeai as genai
 
+
 # Inicializando api do Gemini
-GOOGLE_API_KEY = os.environ["GOOGLE_API_KEY"]
+GOOGLE_API_KEY=os.environ["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro-vision')
 
-def gemini_image(prompt, image_path, retries=3):
-    for attempt in range(retries):
-        try:
-            # Carregando a imagem
-            imagem = Image.open(image_path)
+def gemini_image(prompt, image_path):
+    # Carregando a imagem
+    imagem = Image.open(image_path)
 
-            # Convertendo a imagem para o modo 'RGB' caso esteja em modo 'P'
-            if imagem.mode == 'P':
-                imagem = imagem.convert('RGB')
+    # Convertendo a imagem para o modo 'RGB' caso esteja em modo 'P'
+    if imagem.mode == 'P':
+        imagem = imagem.convert('RGB')
 
-            # Gerando conteúdo com base na imagem e no prompt
-            response = model.generate_content([prompt, imagem], stream=True)
+    # Gerando conteúdo com base na imagem e no prompt
+    response = model.generate_content([prompt, imagem], stream=True)
 
-            # Aguarda a conclusão da iteração antes de acessar os candidatos
-            response.resolve()
+    # Aguarda a conclusão da iteração antes de acessar os candidatos
+    response.resolve()
 
-            # Verificando a resposta
-            if response.candidates and len(response.candidates) > 0:
-                if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
-                    return response.candidates[0].content.parts[0].text
-                else:
-                    print("Nenhuma parte de conteúdo encontrada na resposta.")
-            else:
-                print("Nenhum candidato válido encontrado.")
-            break
-        except google.api_core.exceptions.ServiceUnavailable as e:
-            print(f"Tentativa {attempt + 1} falhou: {e}. Retentando...")
-            time.sleep(5)  # Espera 5 segundos antes de tentar novamente
-    return None
+    # Verificando a resposta
+    if response.candidates and len(response.candidates) > 0:
+        if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
+            return response.candidates[0].content.parts[0].text
+        else:
+            print("Nenhuma parte de conteúdo encontrada na resposta.")
+    else:
+        print("Nenhum candidato válido encontrado.")
 
 # Define função para postagem no Instagram
 def post_instagram_photo():
@@ -92,10 +85,10 @@ def post_instagram_photo():
 
     # Gera legenda para a foto do Instagram
     data = date.today().strftime("%d/%m")
-    response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags", "dog.jpeg")
+    response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags","dog.jpeg")
     if response_gemini is None:
         response_gemini = "#DogOfTheDay #CachorroDoDia"
-
+    
     insta_string = f"""Dog do dia {data}
 {response_gemini}"""
 
@@ -111,28 +104,6 @@ def post_instagram_photo():
         else:
             print("Erro desconhecido durante o upload da foto.")
             bot.send_message(tele_user, 'doglufi com problema pra postar')
-
-    # Obter a última mídia postada pela outra conta e compartilhar como story
-    try:
-        user_id = 62183085222  # ID da conta da qual você deseja compartilhar a última mídia
-        user_feed = cl.user_medias(user_id, amount=1)
-        if user_feed:
-            last_media = user_feed[0]
-            media_path = cl.media_download(last_media.pk)
-            example = cl.user_info(user_id)
-            cl.photo_upload_to_story(
-                media_path,
-                "Confira esta postagem!",
-                mentions=[StoryMention(user=example, x=0.5, y=0.5, width=0.25, height=0.25)],
-                links=[StoryLink(webUri=f'https://www.instagram.com/p/{last_media.code}/')]
-            )
-            print("Story compartilhado com sucesso")
-        else:
-            print("Não foi possível obter a última mídia da conta.")
-            bot.send_message(tele_user, 'Não foi possível obter a última mídia da conta.')
-    except Exception as e:
-        print(f"Erro ao compartilhar story: {e}")
-        bot.send_message(tele_user, 'doglufi com problema pra compartilhar story')
 
 # Variáveis de ambiente
 DOG_KEY = os.environ.get("DOG_KEY")
