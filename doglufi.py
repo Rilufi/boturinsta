@@ -5,6 +5,7 @@ import sys
 import time
 from instagrapi import Client
 from instagrapi.exceptions import ClientError, PhotoNotUpload
+from instagrapi.types import StoryMention, StoryLink, StoryHashtag
 import telebot
 from datetime import date
 from PIL import Image
@@ -117,11 +118,14 @@ def post_instagram_photo():
         user_feed = cl.user_medias(user_id, amount=1)
         if user_feed:
             last_media = user_feed[0]
-            last_media_url = cl.media_download_url(last_media.pk)
-            r = requests.get(last_media_url, allow_redirects=True)
-            open('last_media.jpeg', 'wb').write(r.content)
-          #  story_caption = f"Confira esta postagem de @{cl.user_info(user_id).username}!"
-            cl.story_upload('last_media.jpeg')#, caption=story_caption)
+            media_path = cl.media_download(last_media.pk)
+            example = cl.user_info(user_id)
+            cl.photo_upload_to_story(
+                media_path,
+                "Confira esta postagem!",
+                mentions=[StoryMention(user=example, x=0.5, y=0.5, width=0.25, height=0.25)],
+                links=[StoryLink(webUri=f'https://www.instagram.com/p/{last_media.code}/')]
+            )
             print("Story compartilhado com sucesso")
         else:
             print("Não foi possível obter a última mídia da conta.")
