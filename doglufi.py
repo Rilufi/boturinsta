@@ -2,17 +2,15 @@ import requests
 import json
 import os
 import sys
-import math
 from instagrapi import Client
-from instagrapi.exceptions import ClientError, PhotoNotUpload
+from instagrapi.exceptions import ClientError, PhotoNotUpload, StoryNotUpload
 import telebot
-from datetime import date, timezone, timedelta, datetime
+from datetime import date
 from PIL import Image
 import google.generativeai as genai
 
-
 # Inicializando api do Gemini
-GOOGLE_API_KEY=os.environ["GOOGLE_API_KEY"]
+GOOGLE_API_KEY = os.environ["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro-vision')
@@ -85,10 +83,10 @@ def post_instagram_photo():
 
     # Gera legenda para a foto do Instagram
     data = date.today().strftime("%d/%m")
-    response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags","dog.jpeg")
+    response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags", "dog.jpeg")
     if response_gemini is None:
         response_gemini = "#DogOfTheDay #CachorroDoDia"
-    
+
     insta_string = f"""Dog do dia {data}
 {response_gemini}"""
 
@@ -104,6 +102,22 @@ def post_instagram_photo():
         else:
             print("Erro desconhecido durante o upload da foto.")
             bot.send_message(tele_user, 'doglufi com problema pra postar')
+
+    # Obter a última mídia postada pela outra conta e compartilhar como story
+    try:
+        user_id = 62183085222  # ID da conta da qual você deseja compartilhar a última mídia
+        user_feed = cl.user_medias(user_id, amount=1)
+        if user_feed:
+            last_media = user_feed[0]
+#            story_caption = f"Confira esta postagem de @{cl.user_info(user_id).username}!"
+            cl.story_photo(last_media.pk)#, caption=story_caption)
+            print("Story compartilhado com sucesso")
+        else:
+            print("Não foi possível obter a última mídia da conta.")
+            bot.send_message(tele_user, 'Não foi possível obter a última mídia da conta.')
+    except Exception as e:
+        print(f"Erro ao compartilhar story: {e}")
+        bot.send_message(tele_user, 'doglufi com problema pra compartilhar story')
 
 # Variáveis de ambiente
 DOG_KEY = os.environ.get("DOG_KEY")
