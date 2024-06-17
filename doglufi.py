@@ -47,20 +47,38 @@ def post_instagram_photo():
         cl = Client(request_timeout=7)
         cl.login(USERNAME, PASSWORD)
         print('Logado no Instagram')
-    except:
-        print("deslodog")
+    except Exception as e:
+        print("Erro ao logar no Instagram:", e)
         bot.send_message(tele_user, 'doglufi com problema pra logar')
         sys.exit()
 
     # Obtém URL de uma imagem de cachorro
     url = "https://api.thedogapi.com/v1/images/search?format=json&type=jpeg"
-    payload = {}
     headers = {
         'Content-Type': 'application/json',
         'x-api-key': DOG_KEY
     }
-    response = requests.request("GET", url, headers=headers, data=payload)
-    todos = json.loads(response.text)
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()  # Verifica se a requisição foi bem-sucedida
+        if response.text:
+            todos = json.loads(response.text)
+        else:
+            raise ValueError("Resposta da API está vazia")
+    except requests.exceptions.RequestException as e:
+        print("Erro ao fazer a requisição para a API:", e)
+        bot.send_message(tele_user, 'Erro ao obter imagem da API de cachorros')
+        sys.exit()
+    except json.JSONDecodeError as e:
+        print("Erro ao decodificar o JSON:", e)
+        bot.send_message(tele_user, 'Erro ao decodificar a resposta da API de cachorros')
+        sys.exit()
+    except ValueError as e:
+        print("Erro:", e)
+        bot.send_message(tele_user, 'Resposta da API de cachorros está vazia')
+        sys.exit()
+
     site = todos[0].get('url')
     r = requests.get(site, allow_redirects=True)
     open('dog.jpeg', 'wb').write(r.content)
@@ -68,10 +86,9 @@ def post_instagram_photo():
     # Gera legenda para a foto do Instagram
     data = date.today().strftime("%d/%m")
     response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags","dog.jpeg")
-    if response_gemini == None:
+    if response_gemini is None:
         response_gemini = "#DogOfTheDay #CachorroDoDia"
-    else:
-        pass
+    
     insta_string = f"""Dog do dia {data}
 {response_gemini}"""
 
