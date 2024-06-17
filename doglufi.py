@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import sys
+import time
 from instagrapi import Client
 from instagrapi.exceptions import ClientError, PhotoNotUpload
 import telebot
@@ -15,28 +16,35 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro-vision')
 
-def gemini_image(prompt, image_path):
-    # Carregando a imagem
-    imagem = Image.open(image_path)
+def gemini_image(prompt, image_path, retries=3):
+    for attempt in range(retries):
+        try:
+            # Carregando a imagem
+            imagem = Image.open(image_path)
 
-    # Convertendo a imagem para o modo 'RGB' caso esteja em modo 'P'
-    if imagem.mode == 'P':
-        imagem = imagem.convert('RGB')
+            # Convertendo a imagem para o modo 'RGB' caso esteja em modo 'P'
+            if imagem.mode == 'P':
+                imagem = imagem.convert('RGB')
 
-    # Gerando conteúdo com base na imagem e no prompt
-    response = model.generate_content([prompt, imagem], stream=True)
+            # Gerando conteúdo com base na imagem e no prompt
+            response = model.generate_content([prompt, imagem], stream=True)
 
-    # Aguarda a conclusão da iteração antes de acessar os candidatos
-    response.resolve()
+            # Aguarda a conclusão da iteração antes de acessar os candidatos
+            response.resolve()
 
-    # Verificando a resposta
-    if response.candidates and len(response.candidates) > 0:
-        if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
-            return response.candidates[0].content.parts[0].text
-        else:
-            print("Nenhuma parte de conteúdo encontrada na resposta.")
-    else:
-        print("Nenhum candidato válido encontrado.")
+            # Verificando a resposta
+            if response.candidates and len(response.candidates) > 0:
+                if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
+                    return response.candidates[0].content.parts[0].text
+                else:
+                    print("Nenhuma parte de conteúdo encontrada na resposta.")
+            else:
+                print("Nenhum candidato válido encontrado.")
+            break
+        except google.api_core.exceptions.ServiceUnavailable as e:
+            print(f"Tentativa {attempt + 1} falhou: {e}. Retentando...")
+            time.sleep(5)  # Espera 5 segundos antes de tentar novamente
+    return None
 
 # Define função para postagem no Instagram
 def post_instagram_photo():
@@ -112,8 +120,8 @@ def post_instagram_photo():
             last_media_url = cl.media_download_url(last_media.pk)
             r = requests.get(last_media_url, allow_redirects=True)
             open('last_media.jpeg', 'wb').write(r.content)
-        #    story_caption = f"Confira esta postagem de @{cl.user_info(user_id).username}!"
-            cl.story_photo_upload('last_media.jpeg')#, caption=story_caption)
+          #  story_caption = f"Confira esta postagem de @{cl.user_info(user_id).username}!"
+            cl.story_upload('last_media.jpeg')#, caption=story_caption)
             print("Story compartilhado com sucesso")
         else:
             print("Não foi possível obter a última mídia da conta.")
