@@ -3,7 +3,7 @@ import json
 import os
 import sys
 from instagrapi import Client
-from instagrapi.exceptions import ClientError, PhotoNotUpload, StoryNotUpload
+from instagrapi.exceptions import ClientError, PhotoNotUpload
 import telebot
 from datetime import date
 from PIL import Image
@@ -109,8 +109,11 @@ def post_instagram_photo():
         user_feed = cl.user_medias(user_id, amount=1)
         if user_feed:
             last_media = user_feed[0]
-#            story_caption = f"Confira esta postagem de @{cl.user_info(user_id).username}!"
-            cl.story_photo(last_media.pk)#, caption=story_caption)
+            last_media_url = cl.media_download_url(last_media.pk)
+            r = requests.get(last_media_url, allow_redirects=True)
+            open('last_media.jpeg', 'wb').write(r.content)
+        #    story_caption = f"Confira esta postagem de @{cl.user_info(user_id).username}!"
+            cl.story_photo_upload('last_media.jpeg')#, caption=story_caption)
             print("Story compartilhado com sucesso")
         else:
             print("Não foi possível obter a última mídia da conta.")
