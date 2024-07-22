@@ -64,9 +64,10 @@ try:
     cl = Client(request_timeout=7)
     cl.login(USERNAME, PASSWORD)
     print('gato logado')
-except:
+except Exception as e:
+    print(f"Erro ao logar no Instagram: {e}")
+    bot.send_message(tele_user, f"boturinsta com problema pra logar: {e}")
     print("deslogato")
-    bot.send_message(tele_user, 'boturinsta com problema pra logar')
     sys.exit()
 
 #get the cats
@@ -97,7 +98,7 @@ while retry_count < max_retries:
         site = todos[0].get('url')
         r = requests.get(site, allow_redirects=True)
         open('gato.jpeg', 'wb').write(r.content)
-        response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags","gato.jpeg")
+        response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags","gato.jpeg")
         if response_gemini == None:
             response_gemini = "#CatOfTheDay #GatoDoDia"
         else:
