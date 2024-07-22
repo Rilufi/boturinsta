@@ -49,26 +49,27 @@ tele_user = os.environ.get("TELE_USER")
 TOKEN = os.environ["TELEGRAM_TOKEN"]
 bot = telebot.TeleBot(TOKEN)
 
-# Tentativas de login
-max_login_retries = 3
-login_retry_count = 0
 
-while login_retry_count < max_login_retries:
+# Função para logar no Instagram com sessão
+def logar_instagram():
+    cl = Client()
+    session_file = 'instacat_session.json'
     try:
-        cl = Client(request_timeout=20)  # Aumentando o timeout para 20 segundos
-        cl.login(USERNAME, PASSWORD)
-        print('Gato logado')
-        break
+        if os.path.exists(session_file):
+            cl.load_settings(session_file)
+        cl.login(username, password)
+        cl.get_timeline_feed()
+        cl.dump_settings(session_file)
     except Exception as e:
-        login_retry_count += 1
         print(f"Erro ao logar no Instagram: {e}")
-        if login_retry_count < max_login_retries:
-            print(f"Retrying login... (Attempt {login_retry_count}/{max_login_retries})")
-            time.sleep(5)  # Espera 5 segundos antes de tentar novamente
-        else:
-            bot.send_message(tele_user, f"boturinsta com problema pra logar: {e}")
-            print("Deslogato")
-            sys.exit()
+        bot.send_message(tele_user, f"Erro ao logar no Instagram: {e}")
+    return cl
+
+try:
+    instagram_client = logar_instagram()
+except Exception as e:
+    print(f"Erro ao logar no Instagram: {e}")
+    bot.send_message(tele_user, f"Erro ao logar no Instagram: {e}")
 
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
 payload = {}
@@ -86,35 +87,33 @@ site = todos[0].get('url')
 r = requests.get(site, allow_redirects=True)
 open('gato.jpeg', 'wb').write(r.content)
 
-max_retries = 3
-retry_count = 0
-
-while retry_count < max_retries:
+# Função para postar foto no Instagram
+def post_instagram_photo(cl, image_path, caption):
     try:
-        response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
-        todos = json.loads(response.text)
-        site = todos[0].get('url')
-        r = requests.get(site, allow_redirects=True)
-        open('gato.jpeg', 'wb').write(r.content)
-        response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags", "gato.jpeg")
-        if response_gemini == None:
-            response_gemini = "#CatOfTheDay #GatoDoDia"
-        else:
-            pass
-        insta_string = f""" Gato do dia {data}
-{response_gemini}"""
+        time.sleep(random.uniform(30, 60))  # Espera aleatória antes de postar
+        cl.photo_upload(image_path, caption)
+        print("Foto publicada no Instagram")
+    except Exception as e:
+        print(f"Erro ao postar foto no Instagram: {e}")
+        bot.send_message(tele_user, f"apodinsta com problema pra postar: {e}")
 
-        cl.photo_upload('gato.jpeg', insta_string)
-        print("foto publicada no insta")
-        break
-    except ClientError as e:
-        print(f"Error during photo upload: {e}")
-        retry_count += 1
-        if retry_count < max_retries:
-            print(f"Retrying... (Attempt {retry_count}/{max_retries})")
-            if e.status_code == 403:
-                print("Exiting script due to 403 Forbidden error.")
-                break
-        else:
-            print("Max retries reached. Photo upload failed.")
-            bot.send_message(tele_user, 'boturinsta com problema pra postar')
+try:
+    response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
+    todos = json.loads(response.text)
+    site = todos[0].get('url')
+    r = requests.get(site, allow_redirects=True)
+    open('gato.jpeg', 'wb').write(r.content)
+    response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags", "gato.jpeg")
+    if response_gemini == None:
+        response_gemini = "#CatOfTheDay #GatoDoDia"
+    else:
+        pass
+    insta_string = f""" Gato do dia {data}
+{response_gemini}"""
+    # Post the image on Instagram
+    if instagram_client:
+        try:
+            post_instagram_photo(instagram_client, 'gato.jpeg', insta_string)
+        except Exception as e:
+            print(f"Erro ao postar foto no Instagram: {e}")
+            bot.send_message(tele_user, 'apodinsta com problema pra postar imagem')
