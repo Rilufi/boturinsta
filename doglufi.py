@@ -15,7 +15,7 @@ import google.generativeai as genai
 GOOGLE_API_KEY=os.environ["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 
-model = genai.GenerativeModel('gemini-flash-vision')
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 def gemini_image(prompt, image_path):
     # Carregando a imagem
