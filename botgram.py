@@ -63,14 +63,14 @@ def logar_instagram():
         cl.dump_settings(session_file)
     except Exception as e:
         print(f"Erro ao logar no Instagram: {e}")
-        bot.send_message(tele_user, f"Erro ao logar no Instagram: {e}")
+        bot.send_message(tele_user, f"boturinsta erro ao logar no Instagram: {e}")
     return cl
 
 try:
     instagram_client = logar_instagram()
 except Exception as e:
     print(f"Erro ao logar no Instagram: {e}")
-    bot.send_message(tele_user, f"Erro ao logar no Instagram: {e}")
+    bot.send_message(tele_user, f"boturinsta erro ao logar no Instagram: {e}")
 
 url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
 payload = {}
@@ -95,7 +95,7 @@ def post_instagram_photo(cl, image_path, caption):
         print("Foto publicada no Instagram")
     except Exception as e:
         print(f"Erro ao postar foto no Instagram: {e}")
-        bot.send_message(tele_user, f"apodinsta com problema pra postar: {e}")
+        bot.send_message(tele_user, f"boturinsta com problema pra postar: {e}")
 
 response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
 todos = json.loads(response.text)
@@ -115,4 +115,4 @@ if instagram_client:
         post_instagram_photo(instagram_client, 'gato.jpeg', insta_string)
     except Exception as e:
         print(f"Erro ao postar foto no Instagram: {e}")
-        bot.send_message(tele_user, 'apodinsta com problema pra postar imagem')
+        bot.send_message(tele_user, 'boturinsta com problema pra postar imagem')
