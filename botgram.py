@@ -10,6 +10,7 @@ from datetime import date, timezone, timedelta, datetime
 from PIL import Image
 import google.generativeai as genai
 
+
 # Inicializando api do Gemini
 GOOGLE_API_KEY = os.environ["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -97,23 +98,22 @@ def post_instagram_photo(cl, image_path, caption):
         print(f"Erro ao postar foto no Instagram: {e}")
         bot.send_message(tele_user, f"apodinsta com problema pra postar: {e}")
 
-try:
-    response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
-    todos = json.loads(response.text)
-    site = todos[0].get('url')
-    r = requests.get(site, allow_redirects=True)
-    open('gato.jpeg', 'wb').write(r.content)
-    response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags", "gato.jpeg")
-    if response_gemini == None:
-        response_gemini = "#CatOfTheDay #GatoDoDia"
-    else:
-        pass
-    insta_string = f""" Gato do dia {data}
+response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
+todos = json.loads(response.text)
+site = todos[0].get('url')
+r = requests.get(site, allow_redirects=True)
+open('gato.jpeg', 'wb').write(r.content)
+response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags", "gato.jpeg")
+if response_gemini == None:
+    response_gemini = "#CatOfTheDay #GatoDoDia"
+else:
+    pass
+insta_string = f""" Gato do dia {data}
 {response_gemini}"""
-    # Post the image on Instagram
-    if instagram_client:
-        try:
-            post_instagram_photo(instagram_client, 'gato.jpeg', insta_string)
-        except Exception as e:
-            print(f"Erro ao postar foto no Instagram: {e}")
-            bot.send_message(tele_user, 'apodinsta com problema pra postar imagem')
+# Post the image on Instagram
+if instagram_client:
+    try:
+        post_instagram_photo(instagram_client, 'gato.jpeg', insta_string)
+    except Exception as e:
+        print(f"Erro ao postar foto no Instagram: {e}")
+        bot.send_message(tele_user, 'apodinsta com problema pra postar imagem')
