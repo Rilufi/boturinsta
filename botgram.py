@@ -43,12 +43,12 @@ hora = data_e_hora_sao_paulo.strftime('%H')
 today = date.today()
 data = today.strftime("%d/%m")
 
-CAT_KEY = os.environ.get("CAT_KEY")
-USERNAME = os.environ.get("USERNAME")
-PASSWORD = os.environ.get("PASSWORD")
+cat_key = os.environ.get("CAT_KEY")
+username = os.environ.get("USERNAME")
+password = os.environ.get("PASSWORD")
 tele_user = os.environ.get("TELE_USER")
-TOKEN = os.environ["TELEGRAM_TOKEN"]
-bot = telebot.TeleBot(TOKEN)
+token = os.environ["TELEGRAM_TOKEN"]
+bot = telebot.TeleBot(token)
 
 
 # Função para logar no Instagram com sessão
@@ -76,7 +76,7 @@ url = "https://api.thecatapi.com/v1/images/search?format=json&type=jpeg"
 payload = {}
 headers = {
     'Content-Type': 'application/json',
-    'x-api-key': CAT_KEY
+    'x-api-key': cat_key
 }
 proxies = {
     'http': 'http://10.10.1.10:3128',
@@ -91,7 +91,6 @@ open('gato.jpeg', 'wb').write(r.content)
 # Função para postar foto no Instagram
 def post_instagram_photo(cl, image_path, caption):
     try:
-        time.sleep(random.uniform(30, 60))  # Espera aleatória antes de postar
         cl.photo_upload(image_path, caption)
         print("Foto publicada no Instagram")
     except Exception as e:
