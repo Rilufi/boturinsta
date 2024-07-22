@@ -85,7 +85,7 @@ def post_instagram_photo():
 
     # Gera legenda para a foto do Instagram
     data = date.today().strftime("%d/%m")
-    response_gemini = gemini_image("Escreva uma legenda engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags","dog.jpeg")
+    response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags","dog.jpeg")
     if response_gemini is None:
         response_gemini = "#DogOfTheDay #CachorroDoDia"
     
