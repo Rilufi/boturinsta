@@ -105,6 +105,8 @@ open('gato.jpeg', 'wb').write(r.content)
 response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags", "gato.jpeg")
 if response_gemini == None:
     response_gemini = "#CatOfTheDay #GatoDoDia"
+elif response_gemini == '"':
+    response_gemini = "#CatOfTheDay #GatoDoDia"
 else:
     pass
 insta_string = f""" Gato do dia {data}
