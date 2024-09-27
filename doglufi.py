@@ -55,13 +55,13 @@ def post_instagram_photo(cl, image_path, caption):
         print(f"Erro ao postar foto no Instagram: {e}")
         bot.send_message(tele_user, f"doglufi com problema pra postar: {e}")
 
-def gemini_image(prompt, image_path, max_retries=5):
+def gemini_image(prompt, image_path, max_retries=6):
     imagem = Image.open(image_path)
 
     if imagem.mode == 'P':
         imagem = imagem.convert('RGB')
 
-    retries = 0
+    retries = 1
     while retries < max_retries:
         try:
             response = model.generate_content([prompt, imagem], stream=True)
