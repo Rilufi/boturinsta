@@ -55,28 +55,34 @@ def post_instagram_photo(cl, image_path, caption):
         print(f"Erro ao postar foto no Instagram: {e}")
         bot.send_message(tele_user, f"doglufi com problema pra postar: {e}")
 
-def gemini_image(prompt, image_path):
-    # Carregando a imagem
+def gemini_image(prompt, image_path, max_retries=5):
     imagem = Image.open(image_path)
 
-    # Convertendo a imagem para o modo 'RGB' caso esteja em modo 'P'
     if imagem.mode == 'P':
         imagem = imagem.convert('RGB')
 
-    # Gerando conteúdo com base na imagem e no prompt
-    response = model.generate_content([prompt, imagem], stream=True)
+    retries = 0
+    while retries < max_retries:
+        try:
+            response = model.generate_content([prompt, imagem], stream=True)
+            response.resolve()
+            
+            if response.candidates and len(response.candidates) > 0:
+                if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
+                    return response.candidates[0].content.parts[0].text
+                else:
+                    print("Nenhuma parte de conteúdo encontrada na resposta.")
+            else:
+                print("Nenhum candidato válido encontrado.")
+            break  # Saia do loop se tudo correr bem
 
-    # Aguarda a conclusão da iteração antes de acessar os candidatos
-    response.resolve()
+        except ServiceUnavailable as e:
+            print(f"Erro: {e}. Tentando novamente em {5 ** retries} segundos...")
+            time.sleep(5 ** retries)  # Backoff exponencial
+            retries += 1
 
-    # Verificando a resposta
-    if response.candidates and len(response.candidates) > 0:
-        if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
-            return response.candidates[0].content.parts[0].text
-        else:
-            print("Nenhuma parte de conteúdo encontrada na resposta.")
-    else:
-        print("Nenhum candidato válido encontrado.")
+    print("Falha ao gerar conteúdo após várias tentativas.")
+    return None
 
 # Obtém URL de uma imagem de cachorro
 url = "https://api.thedogapi.com/v1/images/search?format=json&type=jpeg"
