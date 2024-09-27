@@ -17,23 +17,34 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-def gemini_image(prompt, image_path):
+def gemini_image(prompt, image_path, max_retries=5):
     imagem = Image.open(image_path)
 
     if imagem.mode == 'P':
         imagem = imagem.convert('RGB')
 
-    response = model.generate_content([prompt, imagem], stream=True)
+    retries = 0
+    while retries < max_retries:
+        try:
+            response = model.generate_content([prompt, imagem], stream=True)
+            response.resolve()
+            
+            if response.candidates and len(response.candidates) > 0:
+                if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
+                    return response.candidates[0].content.parts[0].text
+                else:
+                    print("Nenhuma parte de conteúdo encontrada na resposta.")
+            else:
+                print("Nenhum candidato válido encontrado.")
+            break  # Saia do loop se tudo correr bem
 
-    response.resolve()
+        except ServiceUnavailable as e:
+            print(f"Erro: {e}. Tentando novamente em {5 ** retries} segundos...")
+            time.sleep(5 ** retries)  # Backoff exponencial
+            retries += 1
 
-    if response.candidates and len(response.candidates) > 0:
-        if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
-            return response.candidates[0].content.parts[0].text
-        else:
-            print("Nenhuma parte de conteúdo encontrada na resposta.")
-    else:
-        print("Nenhum candidato válido encontrado.")
+    print("Falha ao gerar conteúdo após várias tentativas.")
+    return None
 
 fuso_horario = timezone(timedelta(hours=-3))
 data_e_hora_atuais = datetime.now()
