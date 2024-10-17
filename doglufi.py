@@ -118,10 +118,9 @@ open('dog.jpeg', 'wb').write(r.content)
 # Gera legenda para a foto do Instagram
 data = date.today().strftime("%d/%m")
 response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de cachorro para postar no Instagram com hashtags","dog.jpeg")
-if response_gemini is None:
-    response_gemini = "#DogOfTheDay #CachorroDoDia"
-elif response_gemini == '"':
-    response_gemini = "#DogOfTheDay #CachorroDoDia"
+if response_gemini is None or '"':
+    response_gemini = f"""Dog do dia {data}
+#DogOfTheDay #CachorroDoDia"""
 else:
     pass
 insta_string = f"{response_gemini}"
