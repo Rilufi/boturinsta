@@ -121,8 +121,7 @@ elif response_gemini == '"':
     response_gemini = "#CatOfTheDay #GatoDoDia"
 else:
     pass
-insta_string = f""" Gato do dia {data}
-{response_gemini}"""
+insta_string = f"{response_gemini}"
 # Post the image on Instagram
 if instagram_client:
     try:
