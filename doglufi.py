@@ -118,7 +118,7 @@ open('dog.jpeg', 'wb').write(r.content)
 # Gera legenda para a foto do Instagram
 data = date.today().strftime("%d/%m")
 response_gemini = gemini_image(
-    "Crie uma única legenda em português do Brasil engraçada e/ou fofa para esta imagem de cachorro, pronta para ser postada no Instagram com hashtags relevantes. Responda apenas com a legenda e hashtags.",
+    "Crie uma única legenda em português do Brasil engraçada ou fofa para esta imagem de cachorro, pronta para ser postada no Instagram com hashtags relevantes. Responda apenas com a legenda e hashtags.",
     "dog.jpeg"
 )
 if response_gemini is None or response_gemini.strip() in {'"', ""}:
