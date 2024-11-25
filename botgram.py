@@ -114,7 +114,10 @@ todos = json.loads(response.text)
 site = todos[0].get('url')
 r = requests.get(site, allow_redirects=True)
 open('gato.jpeg', 'wb').write(r.content)
-response_gemini = gemini_image("Escreva uma legenda em português do Brasil engraçada e/ou fofa sobre essa imagem de gato para postar no Instagram com hashtags", "gato.jpeg")
+response_gemini = gemini_image(
+    "Crie uma única legenda em português do Brasil engraçada ou fofa para esta imagem de gato, pronta para ser postada no Instagram com hashtags relevantes. Responda apenas com a legenda e hashtags.",
+    "gato.jpeg"
+)
 if response_gemini is None or response_gemini.strip() in {'"', ""}:
     response_gemini = f"""Gato do dia {data}
 #CatOfTheDay #GatoDoDia"""
