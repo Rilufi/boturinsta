@@ -28,17 +28,22 @@ def gemini_image(prompt, image_path, max_retries=6):
         try:
             response = model.generate_content([prompt, imagem], stream=True)
             response.resolve()
-            
+
             if response.candidates and len(response.candidates) > 0:
                 if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
-                    return response.candidates[0].content.parts[0].text
+                    # Filtra a resposta para remover introduções ou explicações
+                    raw_text = response.candidates[0].content.parts[0].text.strip()
+                    # Procura pela primeira quebra de linha ou fim de introdução
+                    if ":" in raw_text:
+                        raw_text = raw_text.split(":", 1)[-1].strip()
+                    return raw_text
                 else:
                     print("Nenhuma parte de conteúdo encontrada na resposta.")
             else:
                 print("Nenhum candidato válido encontrado.")
             break  # Saia do loop se tudo correr bem
 
-        except ServiceUnavailable as e:
+        except Exception as e:
             print(f"Erro: {e}. Tentando novamente em {5 ** retries} segundos...")
             time.sleep(5 ** retries)  # Backoff exponencial
             retries += 1
@@ -115,7 +120,7 @@ site = todos[0].get('url')
 r = requests.get(site, allow_redirects=True)
 open('gato.jpeg', 'wb').write(r.content)
 response_gemini = gemini_image(
-    "Escreva diretamente uma legenda engraçada ou fofa em português do Brasil para esta imagem de gato, pronta para Instagram, seguida apenas das hashtags relevantes. Não inclua explicações ou introduções. Apenas a legenda e as hashtags.",
+    "Gere apenas uma legenda engraçada ou fofa para esta imagem de gato, em português do Brasil, pronta para Instagram. Não inclua introduções, explicações, ou texto adicional. A resposta deve conter somente a legenda seguida diretamente pelas hashtags.",
     "gato.jpeg"
 )
 if response_gemini is None or response_gemini.strip() in {'"', ""}:
