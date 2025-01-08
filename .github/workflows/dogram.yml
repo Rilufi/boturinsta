@@ -3,7 +3,7 @@ name: Doglufi
 
 on:
     schedule:
-        - cron: '0 10 * * *'
+        - cron: '40 17 * * *'
     workflow_dispatch:
 #  workflow_run:
   #  workflows: ["Boturinsta"]
