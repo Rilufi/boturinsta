@@ -66,17 +66,22 @@ def gemini_image(prompt, image_path, max_retries=6):
         try:
             response = model.generate_content([prompt, imagem], stream=True)
             response.resolve()
-            
+
             if response.candidates and len(response.candidates) > 0:
                 if response.candidates[0].content.parts and len(response.candidates[0].content.parts) > 0:
-                    return response.candidates[0].content.parts[0].text
+                    # Filtra a resposta para remover introduções ou explicações
+                    raw_text = response.candidates[0].content.parts[0].text.strip()
+                    # Procura pela primeira quebra de linha ou fim de introdução
+                    if ":" in raw_text:
+                        raw_text = raw_text.split(":", 1)[-1].strip()
+                    return raw_text
                 else:
                     print("Nenhuma parte de conteúdo encontrada na resposta.")
             else:
                 print("Nenhum candidato válido encontrado.")
             break  # Saia do loop se tudo correr bem
 
-        except ServiceUnavailable as e:
+        except Exception as e:
             print(f"Erro: {e}. Tentando novamente em {5 ** retries} segundos...")
             time.sleep(5 ** retries)  # Backoff exponencial
             retries += 1
