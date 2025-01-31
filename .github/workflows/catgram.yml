@@ -45,7 +45,7 @@ jobs:
 
       - name: Download Instagram Session
         if: steps.session-check.outputs.exists == 'true'
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: instacat_session
           path: .
@@ -72,7 +72,7 @@ jobs:
         run: python botgram.py
 
       - name: Upload Instagram Session
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: instacat_session
           path: instacat_session.json
