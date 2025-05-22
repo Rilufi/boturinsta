@@ -1,31 +1,95 @@
-# Boturinsta
+# 📸 Boturinsta - Bot de Pets 🇧🇷
 
-Posting daily pets on Instagram. You can find the results on: [Cats](https://www.instagram.com/boturinsta/) and [Dogs](https://www.instagram.com/doglufi).
+Sistema automatizado para postar fotos diárias de pets no Instagram.
 
-## Requirements
-We employ here the unnoficial Instagram private API [instagrapi](https://subzeroid.github.io/instagrapi/)
+## 🛠 Tecnologias
+- Python
+- Instagrapi (API não oficial do Instagram)
+- The Cat API e Dog API
+- Google Gemini API (para legendas)
 
-### How this works?
-Both "botgram.py" (cats) and "doglufi.py" (dogs) files consists in the scripts for getting and posting the pets. Everything automated from the GitHub Actions.
+## 🐾 Fontes de Conteúdo
+- **Gatos**: [The Cat API](https://thecatapi.com)
+- **Cachorros**: [Dog API](https://dog.ceo/dog-api)
+- **Gatos AI**: [These Cats Do Not Exist](https://thesecatsdonotexist.com)
 
-#### Where does the pets come from?
-The cats come from [The Cat API](https://thecatapi.com/) while the dogs com from [Dog API](https://dog.ceo/dog-api/)
+## ⚙️ Funcionamento
+1. Baixa imagem da API de pets
+2. Gera legenda com Gemini
+3. Posta no Instagram
+4. Interage com posts relevantes (com limites)
 
-#### Other function(s)
-I'm trying to deploy a function for following accounts and liking pictures that post hashtags about cats and dogs, the only problem is to found a way to evade Instagram's request limit. Currently the function that like the most recent post the contains one random hashtag (from the 10 available) per hour, following the account that posted is not working. If it works, I can try to increase the amount, albeit it's risk.
+## ⚠️ Desafios
+- Limites rigorosos do Instagram
+- Necessidade de autenticação manual periódica
+- Risco de bloqueio por automação
 
-# Agora em português porque nois é BR
+## 🏃‍♂️ Como Executar
+1. Configure credenciais no `auth.py`
+2. Instale dependências:
+```
+pip install -r requirements.txt
+```
+ou
+```
+pip install instagrapi google-generativeai requests
+```
+3. Execute:
+```
+python botgram.py # Para gatos
+python doglufi.py # Para cachorros
+```
 
-Publicando pets todo dia no Instagram. Vocês podem ver os resultados em: [Gatos](https://www.instagram.com/boturinsta/) e [Cachorros](https://www.instagram.com/doglufi).
+## 📫 Contato
+- Criado por Yuri Abuchaim
+- [Instagram @boturinsta](https://instagram.com/boturinsta)
+- yuri.abuchaim@gmail.com
 
-## Requisitos
-Aqui usamos a API privada não oficial do Instagram chamada [instagrapi](https://subzeroid.github.io/instagrapi/).
+===========================================
 
-### Como funciona isso?
-Os arquivos `botgram.py` (gatos) e `doglufi.py` (cães) consistem nos scripts para obter e postar os pets. Tudo automatizado através das GitHub Actions.
+# 📸 Boturinsta - Pet Bot 🇺🇸
 
-#### De onde vêm os pets?
-Os gatos vêm da [The Cat API](https://thecatapi.com/), enquanto os cães vêm da [Dog API](https://dog.ceo/dog-api/).
+Automated system to post daily pet photos on Instagram.
 
-#### Outra(s) função(ões)
-Estou tentando implementar uma função para seguir contas e curtir fotos que usem hashtags relacionadas a gatos e cães. O único problema é encontrar uma maneira de evitar o limite de solicitações do Instagram. Atualmente, a função que curte a postagem mais recente que contém uma hashtag aleatória (de 10 disponíveis) por hora, seguindo a conta que fez a postagem não está funcionando. Se funcionar, posso tentar aumentar a quantidade, apesar de ser arriscado.
+## 🛠 Technologies
+- Python
+- Instagrapi (Instagram unofficial API)
+- The Cat API and Dog API
+- Google Gemini API (for captions)
+
+## 🐾 Content Sources
+- **Cats**: [The Cat API](https://thecatapi.com)
+- **Dogs**: [Dog API](https://dog.ceo/dog-api)
+- **AI Cats**: [These Cats Do Not Exist](https://thesecatsdonotexist.com)
+
+## ⚙️ How It Works
+1. Downloads image from pet API
+2. Generates caption with Gemini
+3. Posts to Instagram
+4. Interacts with relevant posts (with limits)
+
+## ⚠️ Challenges
+- Instagram strict limits
+- Periodic manual authentication required
+- Risk of automation bans
+
+## 🏃‍♂️ How to Run
+1. Configure credentials in `auth.py`
+2. Install dependencies:
+```
+pip install -r requirements.txt
+```
+or
+```
+pip install instagrapi google-generativeai requests
+```
+3. Run:
+```
+python botgram.py # For cats
+python doglufi.py # For dogs
+```
+
+## 📫 Contact
+- Created by Yuri Abuchaim
+- [Instagram @boturinsta](https://instagram.com/boturinsta)
+- yuri.abuchaim@gmail.com
