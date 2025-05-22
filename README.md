@@ -30,10 +30,6 @@ Sistema automatizado para postar fotos diárias de pets no Instagram.
 ```
 pip install -r requirements.txt
 ```
-ou
-```
-pip install instagrapi google-generativeai requests
-```
 3. Execute:
 ```
 python botgram.py # Para gatos
@@ -78,10 +74,6 @@ Automated system to post daily pet photos on Instagram.
 2. Install dependencies:
 ```
 pip install -r requirements.txt
-```
-or
-```
-pip install instagrapi google-generativeai requests
 ```
 3. Run:
 ```
