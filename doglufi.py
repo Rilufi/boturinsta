@@ -38,6 +38,7 @@ def logar_instagram():
     except Exception as e:
         print(f"Erro ao logar no Instagram: {e}")
         bot.send_message(tele_user, f"doglufi erro ao logar no Instagram: {e}")
+        sys.exit()
     return cl
 
 try:
